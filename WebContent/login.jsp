@@ -14,6 +14,8 @@ body {
 	background-image: url("images/bank1.jpg");
     background-repeat:no-repeat;
         background-size: cover;
+           opacity: 1;
+           
      width: 100%;
       height: 100%;
 }a{
@@ -73,17 +75,21 @@ margin-right: 15px;
 <a id="reg" href="register.jsp" class="btn btn-info" role="button">Register</a>
 <a id="log" href="login.jsp" class="btn btn-info" role="button">Login</a>
 <div class="wrapper">
-<div style="color: #FF0000;">${errorMessage}</div> 
+ 
 <center><h2 style="color:white"class="form-signin-heading">Please login</h2></center>  
     <form class="form-signin" action="Login">       
-      
+       <div class="form-group">
       UserName :<input type="text" class="form-control" name="name" placeholder="UserName" required="" autofocus="" />
-      <br/>
-      PassWord :<input type="password" class="form-control" name="pass" placeholder="Password" required=""/> <br/>  
-       <div style="color: #FF0000;">${errorMessage}</div>   
+       </div>
+      
+       <div class="form-group">
+      PassWord :<input type="password" class="form-control" name="pass" placeholder="Password" required=""/>
+       </div>  
+       <div style="color: #FF0000;">${errorMessage}</div>  
+          
       <label class="checkbox">
         <input type="checkbox" value="remember-me" id="rememberMe" name="rememberMe"> Remember me
-      </label><br/>
+      </label>
       <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>   
     </form>
   </div>

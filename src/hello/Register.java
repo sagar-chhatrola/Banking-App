@@ -7,12 +7,15 @@ import java.io.PrintWriter;
 import java.sql.SQLException;
 //import java.sql.Statement;
 
-import javax.servlet.RequestDispatcher;
+
 import javax.servlet.ServletException;
 //import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import Service.CustomerServiceImpl;
+import dao.CustomerDao;
 
 
 /**
@@ -42,7 +45,8 @@ public class Register extends HttpServlet {
 	    String pass=request.getParameter("pass");
 	    int m=0;
 	    try {
-			m=CustomerDao.chechUserName(name);
+	    	CustomerServiceImpl cs=new CustomerServiceImpl();
+			m=cs.chechUserName(name);
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

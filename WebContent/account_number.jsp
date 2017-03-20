@@ -9,17 +9,29 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <style>
-body {
-	background: #eee !important;	
+ body  {
+    background-image: url("images/bank.jpg");
+    background-repeat:no-repeat;
+        background-size: cover;
+         background-image: transparent;
+     width: 100%;
+      height: 100%;
+   
 }
 
-.wrapper {	
-	margin-top: 80px;
-  margin-bottom: 80px;
-}
-
+.form-signin {
+  max-width: 380px;
+  padding:  30px 40px 20px;
  
+  margin: 0 auto;
+  background-color: #fff;
+  border: 1px solid rgba(0,0,0,0.1);  
 
+  .form-signin-heading,
+	.checkbox {
+	  margin-bottom: 30px;
+	}
+ }
   .form-signin-heading,
 	.checkbox {
 	  margin-bottom: 30px;

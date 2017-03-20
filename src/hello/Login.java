@@ -1,7 +1,7 @@
 package hello;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+
 import java.sql.SQLException;
 
 import javax.servlet.ServletException;
@@ -10,6 +10,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import Service.CustomerServiceImpl;
+import dao.CustomerDao;
+import pojo.Customer;
 
 /**
  * Servlet implementation class Login
@@ -31,7 +35,7 @@ public class Login extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		 PrintWriter pw=response.getWriter();
+		 //PrintWriter pw=response.getWriter();
 		    response.setContentType("text/html");
 		   String name=request.getParameter("name");
 		   String pass=request.getParameter("pass");
@@ -43,7 +47,8 @@ public class Login extends HttpServlet {
 				Customer c=new Customer();
 				c.setName(name);
 				c.setPass(pass);
-				int id=CustomerDao.getCustomerId(name, pass);
+				CustomerServiceImpl cs=new CustomerServiceImpl();
+				int id=cs.getCustomerId(name, pass);
 				c.setId(id);
 				HttpSession session=request.getSession();
 				session.setAttribute("c", c);

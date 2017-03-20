@@ -1,7 +1,7 @@
 package hello;
 
 import java.io.IOException;
-import java.io.PrintWriter;
+
 import java.sql.SQLException;
 
 import javax.servlet.ServletException;
@@ -10,6 +10,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import dao.CustomerDao;
+import pojo.Customer;
 
 /**
  * Servlet implementation class CreateMultiple
@@ -33,7 +36,9 @@ public class CreateMultiple extends HttpServlet {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		HttpSession session=request.getSession(false);
-		PrintWriter pw=response.getWriter();
+		if(session.getAttribute("c")!=null)
+		{
+		//PrintWriter pw=response.getWriter();
 		String name=request.getParameter("name");
 		String pass=request.getParameter("pass");
 		Customer c=(Customer) session.getAttribute("c");
@@ -54,9 +59,13 @@ public class CreateMultiple extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		}
+		else{
+			request.setAttribute("errorMessage", "Please Login First.");
+			request.getRequestDispatcher("login.jsp").forward(request, response);	
+		}
 	}
-
+ 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */

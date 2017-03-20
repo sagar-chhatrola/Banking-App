@@ -12,6 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import Service.CustomerServiceImpl;
+import dao.CustomerDao;
+import pojo.Customer;
+
 /**
  * Servlet implementation class ListTransaction
  */
@@ -36,7 +40,7 @@ public class ListTransaction extends HttpServlet {
 		HttpSession session=request.getSession(false);
 		
 		PrintWriter pw=response.getWriter();
-		ArrayList<String> al=new ArrayList<String>();
+		ArrayList<StringBuffer> al=new ArrayList<StringBuffer>();
 		int acc_no=Integer.parseInt(request.getParameter("acc_no"));
 		
          if(session!=null)
@@ -46,7 +50,8 @@ public class ListTransaction extends HttpServlet {
 			int id=c.getId();
 			System.out.println(id);
 			int n=0;
-			n=CustomerDao.checkAccount(acc_no,id);
+			CustomerServiceImpl cs=new CustomerServiceImpl();
+			n=cs.checkAccount(acc_no,id);
 			System.out.println(n);
 			pw.println("<br/>");
 			if(n==0)
@@ -62,7 +67,7 @@ public class ListTransaction extends HttpServlet {
 				}else{
 					request.getRequestDispatcher("profile.jsp").include(request, response);
 					pw.println("<br/>");
-				for(String list:al)
+				for(StringBuffer list:al)
 				{
 					pw.println(""+list+"");
 				}

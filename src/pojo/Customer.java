@@ -1,4 +1,4 @@
-package hello;
+package pojo;
 
 public class Customer {
 private int id;

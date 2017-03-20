@@ -25,8 +25,8 @@ body {
 </style>
 </head>
 <body>
-<%@ page import="hello.CustomerDao" %>
-<%@ page import="hello.Customer" %>
+<%@ page import="dao.CustomerDao" %>
+<%@ page import="pojo.Customer" %>
 <%@ page import="hello.Pair" %>
 
   <%@ page import="java.util.*" %>
@@ -40,7 +40,7 @@ body {
 	    //pw.print(request.getParameter("Money"));
 	    // pw.print(request.getParameter("acc_no_transfer"));
 	     HttpSession s =request.getSession(false);
-	     if(s!=null)
+	     if(s.getAttribute("c")!=null)
 	     {//request.getParameter("acc_no_transfer")!="";
 	    	//Validate.checkNumber((request.getParameter("acc_no")));
 	   if(request.getParameter("acc_no_transfer")!="" && request.getParameter("acc_no")!="" && request.getParameter("Money")!="" && Validate.checkNumber((request.getParameter("acc_no"))) && Validate.checkNumber((request.getParameter("Money"))) && Validate.checkNumber((request.getParameter("acc_no_transfer"))))
@@ -59,7 +59,7 @@ body {
     	   if(n>0)
     	   {
     		  //out.println("Successfully transfer<br/><br/>");
-    		   request.setAttribute("errorMessage", "Successfully Transfer!!");
+    		   request.setAttribute("errorMessage", "Successfully Transfered!!");
 				request.getRequestDispatcher("profile.jsp").forward(request, response);
     		   //request.getRequestDispatcher("profile.html").include(request, response);
     	   }
@@ -67,7 +67,7 @@ body {
     	   {
     		   //out.println("Enter Valiad Input,Incoorect account or not sufficent ammount!!");
     		   //request.getRequestDispatcher("transaction.html").include(request, response);
-    		   request.setAttribute("errorMessage", "Enter Valiad Input,Incoorect account or not sufficent ammount!!");
+    		   request.setAttribute("errorMessage", "Enter Valad Input, Incoorect account or not sufficent ammount!!");
 				request.getRequestDispatcher("transaction.jsp").forward(request, response);
     	   }
 		

@@ -15,6 +15,7 @@ body {
 	background-image: url("images/bank1.jpg");
     background-repeat:no-repeat;
         background-size: cover;
+          opacity: 1;
      width: 100%;
       height: 100%;	
 }
@@ -80,7 +81,7 @@ margin-right: 15px;
   
   <form class="form-signin" action="Register">
     <div class="form-group">
-      <label for="usr">Name:</label>
+      <label for="usr">UserName:</label>
       <input type="text" class="form-control" id="usr" name="name">
     </div>
     <div class="form-group">

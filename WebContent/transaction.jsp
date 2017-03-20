@@ -8,8 +8,16 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<style> 
- 
+<style type="text/css"> 
+  body  {
+    background-image: url("images/bank.jpg");
+    background-repeat:no-repeat;
+        background-size: cover;
+         background-image: transparent;
+     width: 100%;
+      height: 100%;
+   
+}
 
 input[type="text"] {
 	  margin-bottom: -1px;
@@ -22,7 +30,33 @@ input[type="text"] {
 	  border-top-left-radius: 0;
 	  border-top-right-radius: 0;
 	}
+	
+	.form-control {
+	  position: relative;
+	  font-size: 16px;
+	  height: auto;
+	  padding: 10px;
+		@include box-sizing(border-box);
 
+		&:focus {
+		  z-index: 2;
+		}
+	}
+	
+	
+.form-signin {
+  max-width: 380px;
+  padding:  30px 40px 20px;
+ 
+  margin: 0 auto;
+  background-color: #fff;
+  border: 1px solid rgba(0,0,0,0.1);  
+
+  .form-signin-heading,
+	.checkbox {
+	  margin-bottom: 30px;
+	}
+}
 
 </style>
 </head>
