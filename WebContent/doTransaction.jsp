@@ -1,3 +1,4 @@
+<%@page import="Service.CustomerServiceImpl"%>
 <%@page import="hello.Validate"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -53,9 +54,9 @@ body {
 			Customer c=(Customer) session.getAttribute("c");
 			int id=c.getId();
 			
+    	  CustomerServiceImpl cs=new CustomerServiceImpl();
     	  
-    	  
-    	   int n= CustomerDao.Transfer_ammount(ammount,acc_no,acc_no_transfer,id);
+    	   int n= cs.Transfer_ammount(ammount,acc_no,acc_no_transfer,id);
     	   if(n>0)
     	   {
     		  //out.println("Successfully transfer<br/><br/>");
@@ -85,8 +86,10 @@ body {
 			request.getRequestDispatcher("transaction.jsp").forward(request, response);
 	   }
 	     }  else{
-	    	 out.println("please login first");
-	    	 request.getRequestDispatcher("login.html").include(request, response);
+	    	    request.setAttribute("errorMessage", "Please login first !!");
+				
+	    	// out.println("please login first");
+	    	 request.getRequestDispatcher("login.jsp").forward(request, response);
 	     }%> 
 </body>
 </html>

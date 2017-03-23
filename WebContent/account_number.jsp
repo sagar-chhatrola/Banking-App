@@ -45,7 +45,7 @@
 <div class="container">
  <center> <h2>Enter Details</h2></center>
   
-  <form class="form-signin" action="transactionList.jsp">
+  <form class="form-signin" action="transactionList.jsp" method="post">
     <div class="form-group">
       <label for="usr">Enter Your Account Number to see history:</label>
       <input type="text" class="form-control" id="usr" name="acc_no">

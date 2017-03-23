@@ -1,3 +1,4 @@
+<%@page import="pojo.Transaction"%>
 <%@page import="Service.CustomerServiceImpl"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -5,6 +6,9 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <title>Insert title here</title>
 <style>
 body {
@@ -27,7 +31,7 @@ body {
 <body>
 <jsp:include page="profile.html" /> 
 <%@ page import="dao.*" %>
-<%@ page import="pojo.Customer" %>
+<%@ page import="pojo.*" %>
 <%@ page import="hello.Pair" %>
 
 <%@ page import="Service.*" %>
@@ -36,7 +40,7 @@ body {
    <%@ page import="javax.servlet.http.HttpSession" %>
     <%@ page import="javax.servlet.http.HttpServletRequest" %>
     
-    <%!ArrayList<StringBuffer> al=null; int acc_no,n=0;{%>
+    <%!ArrayList<Transaction> al=null; int acc_no,n=0;{%>
 <%
 HttpSession s=request.getSession(false);
    if(s.getAttribute("c")!=null)
@@ -61,8 +65,8 @@ try {
 	Customer c=(Customer) session.getAttribute("c");
 	int id=c.getId();
 	System.out.println(id);
-CustomerServiceImpl cs=new CustomerServiceImpl();
-	n=cs.checkAccount(acc_no,id);
+  
+	n=CustomerDao.checkAccount(acc_no,id);
 	System.out.println(n);
 	out.println("<br/>");
 	if(n==0)
@@ -71,7 +75,7 @@ CustomerServiceImpl cs=new CustomerServiceImpl();
 		//request.getRequestDispatcher("account_number.jsp").include(request,response);
 		//out.println("<br/>this is not your account number.<br/>");
 		al=null;
-		al=new ArrayList<StringBuffer>();
+		al=new ArrayList<Transaction>();
 		request.setAttribute("errorMessage", "please enter your account number");
 		request.getRequestDispatcher("account_number.jsp").forward(request,response);
 	}
@@ -98,16 +102,35 @@ else{
           
         <h2>Account History</h2>
         <br/>
-        <pre><h4> Ammount      Credited_Acc     Debited_Acc      Transaction_id      Date_Time </h4></pre>
-        <pre><%if(n!=0) 
-        for(StringBuffer list:al)
-		{
-			out.println("->  "+list+"");
-			
-			
-			}%>
-			</pre>
-			<%!al=null;al=new ArrayList<StringBuffer>(); }%>
+       <table class="table">
+		<thead>
+        <tr>
+            <th>Ammount</th>
+            <th>Credite_acc</th>
+            <th>Debited_acc</th>
+            <th>Transaction_id</th>
+            <th>Date_time</th>
+            
+        </tr>
+    </thead>
+        <%if(n!=0) 
+        for(Transaction list:al)
+		{ 
+			%>
+    <tbody>
+        <tr>
+            <td><%= list.getAmount() %></td>
+            <td><%= list.getCredited_acc() %></td>
+            <td><%= list.getDebited_acc() %></td>
+            <td><%= list.getT_id() %></td>
+            <td><%= list.getDatetime() %></td>
+            
+        </tr>
+        <% }%>
+			</tbody>
+			</table>
+		
+			<%!al=null;al=new ArrayList<Transaction>(); }%>
   </div>
 </body>
 </html>

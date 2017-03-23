@@ -45,8 +45,8 @@ public class Register extends HttpServlet {
 	    String pass=request.getParameter("pass");
 	    int m=0;
 	    try {
-	    	CustomerServiceImpl cs=new CustomerServiceImpl();
-			m=cs.chechUserName(name);
+	    
+			m=CustomerDao.chechUserName(name);
 		} catch (SQLException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();

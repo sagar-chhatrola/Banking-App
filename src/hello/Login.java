@@ -47,8 +47,8 @@ public class Login extends HttpServlet {
 				Customer c=new Customer();
 				c.setName(name);
 				c.setPass(pass);
-				CustomerServiceImpl cs=new CustomerServiceImpl();
-				int id=cs.getCustomerId(name, pass);
+				
+				int id=CustomerDao.getCustomerId(name, pass);
 				c.setId(id);
 				HttpSession session=request.getSession();
 				session.setAttribute("c", c);

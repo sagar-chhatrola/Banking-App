@@ -35,7 +35,6 @@
 <%! String name,pass,str; 
 int status,id;
 ArrayList<Integer> acc=null;ArrayList<Integer> balance=null;
-CustomerServiceImpl cs=new CustomerServiceImpl();
 {%> 
  
   <%
@@ -81,25 +80,37 @@ CustomerServiceImpl cs=new CustomerServiceImpl();
        </div>
         
       <div class="col-md-4 col-md-offset-4">
-      <h2 style="font-size: 14;color:navy;"><%="Welcome "+cs.getUserName(id)+"!!"%></h2>
+      <h2 style="font-size: 14;color:navy;"><%="Welcome "+CustomerDao.getUserName(id)+"!!"%></h2>
       </div>
      
       </div>
       <br/>
       
    
-      <pre style="color:black ;font-size:20px;">Account Number   Balance</pre>
      
-      <pre id="history"><%
-        for(int i=0;i<acc.size();i++){
-    	  out.print(acc.get(i)+"                          ");
-    	  out.print(balance.get(i)+" INR");
-    	  out.println();
-    	  out.println();
-    	  
-    	 }
+      <table class="table">
+		<thead>
+        <tr>
+            <th>Account Number</th>
+            <th>Balance</th>
+        
+             </tr>
+    </thead>
+        <% 
+        for(int i=0;i<acc.size();i++)
+		{ 
+			%>
+    <tbody>
+        <tr>
+            <td><%= acc.get(i) %></td>
+            <td><%= balance.get(i) %></td>
+           
+            
+        </tr>
+        <% }%>
+			</tbody>
+			</table>
       
-      %>    
       <%!}%>
       
       <br/> </pre>

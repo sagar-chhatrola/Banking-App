@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import Service.CustomerServiceImpl;
 import dao.CustomerDao;
 import pojo.Customer;
 
@@ -51,8 +52,8 @@ public class DoTransaction extends HttpServlet {
 			int id=c.getId();
 			
     	  
-    	  
-    	   int n= CustomerDao.Transfer_ammount(ammount,acc_no,acc_no_transfer,id);
+    	  CustomerServiceImpl cs=new CustomerServiceImpl();
+    	   int n=cs.Transfer_ammount(ammount,acc_no,acc_no_transfer,id);
     	   if(n>0)
     	   {
     		   pw.println("Successfully transfer<br/><br/>");

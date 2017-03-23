@@ -69,7 +69,7 @@ input[type="text"] {
 <div class="container">
  <center> <h2>Enter Details</h2></center>
   
-  <form class="form-signin" action="doTransaction.jsp">
+  <form class="form-signin" action="doTransaction.jsp" method="post">
     <div class="form-group">
       <label for="usr">Enter Your Account Number:</label>
       <input type="text" class="form-control" id="usr" name="acc_no">
