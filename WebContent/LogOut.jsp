@@ -13,7 +13,7 @@
    <%@ page import="javax.servlet.http.HttpSession" %>
     <%@ page import="javax.servlet.http.HttpServletRequest" %>
 <jsp:include page="profile.html" />  
-<%  request.getRequestDispatcher("index.html").include(request, response);  
+<%  request.getRequestDispatcher("index.jsp").forward(request, response);  
 
 HttpSession se=request.getSession(false);  
 se.invalidate();  

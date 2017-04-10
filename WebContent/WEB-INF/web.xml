@@ -1,56 +1,95 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:c="http://java.sun.com/jsp/jstl/core" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
   <display-name>OnlineBanking</display-name>
-  <welcome-file-list>  
-   <welcome-file>index.html</welcome-file>  
-    
-  </welcome-file-list>  
+  <welcome-file-list>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
   <servlet>
-    <servlet-name>s1</servlet-name>
-    <servlet-class>hello.Register</servlet-class>
+    <servlet-name>Register</servlet-name>
+    <servlet-class>entity.Register</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>s1</servlet-name>
+    <servlet-name>Register</servlet-name>
     <url-pattern>/Register</url-pattern>
   </servlet-mapping>
   <servlet>
-    <servlet-name>s2</servlet-name>
-    <servlet-class>hello.Login</servlet-class>
+    <servlet-name>Login</servlet-name>
+    <servlet-class>entity.Login</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>s2</servlet-name>
+    <servlet-name>Login</servlet-name>
     <url-pattern>/Login</url-pattern>
   </servlet-mapping>
   <servlet>
-    <servlet-name>s3</servlet-name>
-    <servlet-class>hello.LogOut</servlet-class>
+    <servlet-name>Logout</servlet-name>
+    <servlet-class>entity.LogOut</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>s3</servlet-name>
+    <servlet-name>Logout</servlet-name>
     <url-pattern>/LogOut</url-pattern>
   </servlet-mapping>
   <servlet>
-    <servlet-name>s4</servlet-name>
-    <servlet-class>hello.DoTransaction</servlet-class>
+    <servlet-name>DoTransaction</servlet-name>
+    <servlet-class>entity.DoTransaction</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>s4</servlet-name>
+    <servlet-name>DoTransaction</servlet-name>
     <url-pattern>/DoTransaction</url-pattern>
   </servlet-mapping>
   <servlet>
-    <servlet-name>s5</servlet-name>
-    <servlet-class>hello.ListTransaction</servlet-class>
+    <servlet-name>ListTransaction</servlet-name>
+    <servlet-class>entity.ListTransaction</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>s5</servlet-name>
+    <servlet-name>ListTransaction</servlet-name>
     <url-pattern>/ListTransaction</url-pattern>
   </servlet-mapping>
   <servlet>
-    <servlet-name>s6</servlet-name>
-    <servlet-class>hello.CreateMultiple</servlet-class>
+    <servlet-name>MultipleAcoount</servlet-name>
+    <servlet-class>entity.CreateMultiple</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>s6</servlet-name>
+    <servlet-name>MultipleAcoount</servlet-name>
     <url-pattern>/CreateMultiple</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>UpdateUserName</servlet-name>
+    <servlet-class>utility.UpdateUserName</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UpdateUserName</servlet-name>
+    <url-pattern>/updateUserName</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>UpdateEmail</servlet-name>
+    <servlet-class>utility.UpdateEmail</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UpdateEmail</servlet-name>
+    <url-pattern>/updateEmail</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>UpdateUserProfile</servlet-name>
+    <servlet-class>controller.UpdateUserProfile</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>UpdateUserProfile</servlet-name>
+    <url-pattern>/updateProfile</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>getTransactionHistory</servlet-name>
+    <servlet-class>controller.getTransactionHistory</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>getTransactionHistory</servlet-name>
+    <url-pattern>/getTransactionHistory</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <servlet-name>getAllAccountNumber</servlet-name>
+    <servlet-class>controller.getAllAccountNumberList</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>getAllAccountNumber</servlet-name>
+    <url-pattern>/getAllAccountNumber</url-pattern>
   </servlet-mapping>
 </web-app>

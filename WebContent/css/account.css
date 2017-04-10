@@ -1,0 +1,6 @@
+@CHARSET "ISO-8859-1";
+<style>
+ table { table-layout: fixed; }
+ table th, table td { overflow: hidden; }
+ 
+</style>
