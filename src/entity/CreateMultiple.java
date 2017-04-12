@@ -1,18 +1,17 @@
 package entity;
 
 import java.io.IOException;
-
 import java.sql.SQLException;
 
 import javax.servlet.ServletException;
-
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import dao.CustomerDao;
 import pojo.Customer;
+import service.AccountService;
+import service.AccountServiceImpl;
 
 /**
  * Servlet implementation class CreateMultiple
@@ -20,7 +19,7 @@ import pojo.Customer;
 
 public class CreateMultiple extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	AccountService accountService=new AccountServiceImpl();
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -44,7 +43,8 @@ public class CreateMultiple extends HttpServlet {
 			int id = c.getId();
 			System.out.println(id);
 			try {
-				int status = CustomerDao.createMultiple(name, pass, id);
+				
+				int status = accountService.createMultiple(name, pass, id);
 				if (status == 1) {
 					request.setAttribute("errorMessage", "Successfully Another Account Created.");
 					request.getRequestDispatcher("account.jsp").include(request, response);

@@ -53,43 +53,11 @@
     <url-pattern>/CreateMultiple</url-pattern>
   </servlet-mapping>
   <servlet>
-    <servlet-name>UpdateUserName</servlet-name>
-    <servlet-class>utility.UpdateUserName</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>UpdateUserName</servlet-name>
-    <url-pattern>/updateUserName</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>UpdateEmail</servlet-name>
-    <servlet-class>utility.UpdateEmail</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>UpdateEmail</servlet-name>
-    <url-pattern>/updateEmail</url-pattern>
-  </servlet-mapping>
-  <servlet>
     <servlet-name>UpdateUserProfile</servlet-name>
     <servlet-class>controller.UpdateUserProfile</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>UpdateUserProfile</servlet-name>
     <url-pattern>/updateProfile</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>getTransactionHistory</servlet-name>
-    <servlet-class>controller.getTransactionHistory</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>getTransactionHistory</servlet-name>
-    <url-pattern>/getTransactionHistory</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <servlet-name>getAllAccountNumber</servlet-name>
-    <servlet-class>controller.getAllAccountNumberList</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>getAllAccountNumber</servlet-name>
-    <url-pattern>/getAllAccountNumber</url-pattern>
   </servlet-mapping>
 </web-app>

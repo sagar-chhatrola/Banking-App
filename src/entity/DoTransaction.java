@@ -1,18 +1,15 @@
 package entity;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.SQLException;
 
 import javax.servlet.ServletException;
-
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import Service.CustomerServiceImpl;
 import pojo.Customer;
+import service.CustomerServiceImpl;
 
 /**
  * Servlet implementation class DoTransaction
@@ -20,7 +17,7 @@ import pojo.Customer;
 
 public class DoTransaction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	CustomerServiceImpl cs = new CustomerServiceImpl();
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -49,13 +46,13 @@ public class DoTransaction extends HttpServlet {
 				try {
 					Customer customer = (Customer) s.getAttribute("customer");
 					int id = customer.getId();
-					CustomerServiceImpl cs = new CustomerServiceImpl();
+					
 					int status = cs.transferAmmount(ammount, accountNumber, accountNumberTransfer, id);
 					if (status > 0) {
 						request.setAttribute("errorMessage", "Successfully Transfered!!");
-						response.sendRedirect("account.jsp");
+						response.sendRedirect("GetAccountInfo");
 					} else {
-						request.setAttribute("errorMessage",
+						request.setAttribute("errorMassage",
 								"Enter Valad ammount,or not sufficent ammount!!");
 						request.getRequestDispatcher("transaction.jsp").forward(request, response);
 					}

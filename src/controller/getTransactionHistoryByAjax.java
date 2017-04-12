@@ -11,20 +11,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.CustomerDao;
 import pojo.Transaction;
+import service.TransactionService;
+import service.TransactionServiceImpl;
 
 /**
  * Servlet implementation class getTransactionHistoryByAjax
  */
 @WebServlet("/getTransactionHistoryByAjax")
-public class getTransactionHistoryByAjax extends HttpServlet {
+public class GetTransactionHistoryByAjax extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	TransactionService transactionService=new TransactionServiceImpl();
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public getTransactionHistoryByAjax() {
+    public GetTransactionHistoryByAjax() {
         super();
         
     }
@@ -38,8 +39,9 @@ public class getTransactionHistoryByAjax extends HttpServlet {
 		
            List<Transaction> transactionList;
            try {
+        	   
         	   transactionList=new ArrayList<Transaction>();
-			transactionList=CustomerDao.listOfTransaction(accountNumber);
+			transactionList=transactionService.listOfTransaction(accountNumber);
 	
 			 request.setAttribute("transactionList", transactionList);
 			 request.getRequestDispatcher("transactionHistory.jsp").forward(request, response);

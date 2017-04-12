@@ -1,14 +1,17 @@
-package Service;
+package service;
 
+import java.sql.Date;
 import java.sql.SQLException;
 
+import pojo.Customer;
+
 public interface CustomerService {
-
-	public int accountValidation(int id, int acc_no) throws SQLException;
-
-	public int accountValidation1(int id, int acc_no_transfer) throws SQLException;
-
+	public  int register(String name, String pass,String email,java.sql.Date birthDate,String gender,Long mobileNumber) throws SQLException;
+	public  int signIn(String name, String pass) throws SQLException;
+	public  int getCustomerId(String userName) throws Exception ;
+	public  String getUserName(int customerId) throws SQLException ;
+	public  int chechUserName(String userName) throws SQLException;
+	public  Customer getUserProfile(int customerId) throws SQLException;
+	public  int updateProfile(String userName,String email,String password,String gender,Long mobileNumber,Date birthDate,int customerId) throws SQLException;
 	public int transferAmmount(Integer ammount, Integer acc_no, Integer account_transfer, int id) throws SQLException;
-
-	public String md5(String pass);
 }

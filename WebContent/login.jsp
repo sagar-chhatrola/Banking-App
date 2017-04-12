@@ -19,7 +19,7 @@
 <%HttpSession session1=request.getSession(false); 
 if(session1.getAttribute("customer")!=null)
 {
-response.sendRedirect("account.jsp");	
+response.sendRedirect("profile.jsp");	
 }
 %>
 

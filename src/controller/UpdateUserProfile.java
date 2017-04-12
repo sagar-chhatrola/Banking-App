@@ -9,8 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import dao.CustomerDao;
 import pojo.Customer;
+import service.CustomerService;
+import service.CustomerServiceImpl;
 
 /**
  * Servlet implementation class UpdateUserProfile
@@ -18,7 +19,7 @@ import pojo.Customer;
 
 public class UpdateUserProfile extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	CustomerService customerService=new CustomerServiceImpl();
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -42,9 +43,9 @@ public class UpdateUserProfile extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		Customer customer = (Customer) session.getAttribute("customer");
 		int customerId = customer.getId();
-		int status;
+		
 		try {
-			status = CustomerDao.updateProfile(userName, email, password, gender, mobile, birthDate, customerId);
+			 customerService.updateProfile(userName, email, password, gender, mobile, birthDate, customerId);
 		} catch (SQLException e) {
 
 			e.printStackTrace();

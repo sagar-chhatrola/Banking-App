@@ -12,19 +12,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import dao.CustomerDao;
+import service.AccountService;
+import service.AccountServiceImpl;
 
 /**
  * Servlet implementation class getAccountNumberList
  */
 @WebServlet("/getAccountNumberList")
-public class getAccountNumberList extends HttpServlet {
+public class GetAccountNumberList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+	AccountService accountService=new AccountServiceImpl();
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public getAccountNumberList() {
+    public GetAccountNumberList() {
         super();
        
     }
@@ -37,7 +38,8 @@ public class getAccountNumberList extends HttpServlet {
 		int customerId=(int) session.getAttribute("customerId");
 		List<Integer> accountNumberList=new ArrayList<Integer>();
 		try {
-			accountNumberList=CustomerDao.getAccountNumber(customerId);
+			
+			accountNumberList=accountService.getAccountNumber(customerId);
 			session.setAttribute("accountNumberList", accountNumberList);
 			response.sendRedirect("accountNumber.jsp");
 		} catch (SQLException e) {

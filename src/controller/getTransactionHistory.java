@@ -6,25 +6,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import dao.CustomerDao;
 import pojo.Transaction;
+import service.AccountService;
+import service.AccountServiceImpl;
+import service.TransactionService;
+import service.TransactionServiceImpl;
 
 /**
  * Servlet implementation class getTransactionHistory
  */
-//@WebServlet("/getTransactionHistory")
-public class getTransactionHistory extends HttpServlet {
+@WebServlet("/GetTransactionHistory")
+public class GetTransactionHistory extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	TransactionService transactionService=new TransactionServiceImpl();
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public getTransactionHistory() {
+	public GetTransactionHistory() {
 		super();
 
 	}
@@ -38,13 +42,16 @@ public class getTransactionHistory extends HttpServlet {
 		int accountNumber;
 		List<Transaction> transactionList = null;
 		List<Integer> accountNumberList = null;
+		AccountService accountService=null;
+		
 		try {
 			HttpSession session = request.getSession(false);
 			transactionList = new ArrayList<Transaction>();
 			accountNumberList = new ArrayList<Integer>();
 			int customerId = (int) session.getAttribute("customerId");
-
-			accountNumberList = CustomerDao.getAccountNumber(customerId);
+			new AccountServiceImpl();
+			accountService=new AccountServiceImpl();
+			accountNumberList = accountService.getAccountNumber(customerId);
 			if(request.getParameter("accountNumber")!=null)
 	        {
 	       	 
@@ -53,7 +60,7 @@ public class getTransactionHistory extends HttpServlet {
 	        	 accountNumber=accountNumberList.get(0);
 	        }
 			
-			transactionList = CustomerDao.listOfTransaction(accountNumber);
+			transactionList = transactionService.listOfTransaction(accountNumber);
 			session.setAttribute("accountNumberList", accountNumberList);
 			request.setAttribute("accountNumber", accountNumber);
 			session.setAttribute("transactionList", transactionList);

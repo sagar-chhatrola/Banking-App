@@ -13,14 +13,14 @@
    <%@ page import="javax.servlet.http.HttpSession" %>
     <%@ page import="javax.servlet.http.HttpServletRequest" %>
 <jsp:include page="profile.html" />  
-<%  request.getRequestDispatcher("index.jsp").forward(request, response);  
+<%    
 
 HttpSession se=request.getSession(false);  
 se.invalidate();  
 out.println();  
 
 out.println("You are successfully logged out!");  
-
+request.getRequestDispatcher("index.jsp").forward(request, response);
 out.close();   %>
 </body>
 </html>

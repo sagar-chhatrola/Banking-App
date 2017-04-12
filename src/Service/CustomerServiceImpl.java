@@ -1,126 +1,63 @@
-package Service;
+package service;
 
-import java.security.MessageDigest;
-import java.sql.Connection;
-import java.sql.ResultSet;
+import java.sql.Date;
 import java.sql.SQLException;
-import java.sql.Statement;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.List;
 
-import utility.Database;
+import dao.CustomerDao;
+import dao.CustomerDaoImpl;
+import pojo.Customer;
 
 public class CustomerServiceImpl implements CustomerService {
+    
+	CustomerDao customerDao=new CustomerDaoImpl();
 
-	public int transferAmmount(Integer ammount, Integer acc_no, Integer account_transfer, int id) throws SQLException {
+	@Override
+	public int register(String name, String pass, String email, Date birthDate, String gender, Long mobileNumber)
+			throws SQLException {
 		
-		Connection con = Database.getInstance().getConnection();
-		Statement st = con.createStatement();
-		int n = 0;
-		CustomerServiceImpl cs = new CustomerServiceImpl();
-		int n1 = cs.accountValidation(id, acc_no);
-		int n2 = cs.accountValidation1(id, account_transfer);
-		if (n1 != 0 && n2 != 0 && ammount>0) {
-
-			String str = "select * from bank.account where acc_no=" + acc_no + "";
-
-			System.out.println(str);
-
-			ResultSet rs = st.executeQuery(str);
-
-			
-
-			while (rs.next()) {
-				if (rs.getInt(3) >= ammount && ammount != null) {
-					Integer balance1 = rs.getInt(3);
-					System.out.println(balance1);
-					Statement st1 = con.createStatement();
-
-					String credit = "update bank.account set balance='" + balance1 + "'-'" + ammount + "'where acc_no='"
-							+ acc_no + "'";
-					st1.executeUpdate(credit);
-					System.out.println(credit);
-					String str1 = "select balance from bank.account where acc_no=" + account_transfer + "";
-					ResultSet rs1 = st1.executeQuery(str1);
-					int balance2 = 0;
-					while (rs1.next()) {
-						balance2 = rs1.getInt("balance");
-					}
-					String debit = "update bank.account set balance='" + balance2 + "'+'" + ammount + "'where acc_no='"
-							+ account_transfer + "'";
-					st1.executeUpdate(debit);
-					n = 1;
-					String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
-					
-					String history_query = "insert into bank.transcation (amount,credited_acc,debited_acc,datetime) values('"
-							+ ammount + "','" + account_transfer + "','" + acc_no + "','" + timeStamp + "')";
-
-					st1.execute(history_query);// return 1;
-				} else {
-					n = 0;
-				}
-			}
-		}
-		return n;
-
-	}
-
-	public int accountValidation(int id, int acc_no) throws SQLException {
-		String query = "select acc_no from bank.account where cust_id='" + id + "'";
-		Connection con = Database.getInstance().getConnection();
-		Statement st = con.createStatement();
-		ResultSet rs2 = st.executeQuery(query);
-		List<Integer> li = new ArrayList<Integer>();
-
-		int n = 0;
-		while (rs2.next()) {
-			li.add(rs2.getInt("acc_no"));
-
-		}
-		if (li.contains(acc_no)) {
-			n = 1;
-		}
-		return n;
-	}
-
-	public int accountValidation1(int id, int acc_no_transfer) throws SQLException {
-		String query = "select acc_no from bank.account";
-		Connection con = Database.getInstance().getConnection();
-		Statement st = con.createStatement();
-		ResultSet rs2 = st.executeQuery(query);
-		List<Integer> li = new ArrayList<Integer>();
-
-		int n = 0;
-		while (rs2.next()) {
-			li.add(rs2.getInt("acc_no"));
-
-		}
-		if (li.contains(acc_no_transfer)) {
-			n = 1;
-		}
-		return n;
+		return customerDao.register(name, pass, email, birthDate, gender, mobileNumber);
 	}
 
 	@Override
-	public String md5(String pass) {
-		String cipherText = null;
-		try {
+	public int signIn(String name, String pass) throws SQLException {
+	
+		return 	customerDao.signIn(name, pass);
+	}
 
-			MessageDigest md = MessageDigest.getInstance("MD5");
+	@Override
+	public int getCustomerId(String userName) throws Exception {
+		
+		return customerDao.getCustomerId(userName);
+	}
 
-			md.update(pass.getBytes());
+	@Override
+	public String getUserName(int customerId) throws SQLException {
+		
+		return customerDao.getUserName(customerId);
+	}
 
-			byte[] byteCipher = md.digest(pass.getBytes());
+	@Override
+	public int chechUserName(String userName) throws SQLException {
+		
+		return customerDao.chechUserName(userName);
+	}
 
-			cipherText = new String(byteCipher);
+	@Override
+	public Customer getUserProfile(int customerId) throws SQLException {
+		
+		return customerDao.getUserProfile(customerId);
+	}
 
-			System.out.println(" Cipher Text : " + cipherText);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	@Override
+	public int updateProfile(String userName, String email, String password, String gender, Long mobileNumber,
+			Date birthDate, int customerId) throws SQLException {
+		
+		return customerDao.updateProfile(userName, email, password, gender, mobileNumber, birthDate, customerId);
+	}
 
-		return cipherText;
+	@Override
+	public int transferAmmount(Integer ammount, Integer acc_no, Integer account_transfer, int id) throws SQLException {
+	
+		return customerDao.transferAmmount(ammount, acc_no, account_transfer, id);
 	}
 }

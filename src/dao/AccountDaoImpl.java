@@ -13,6 +13,7 @@ import utility.Database;
 
 public class AccountDaoImpl implements AccountDao {
     Connection con=null;
+    
 	public ArrayList<Account> getAccountInfo(int customerId) throws SQLException {
 
 		ArrayList<Account> accountList = new ArrayList<Account>();
@@ -35,6 +36,7 @@ public class AccountDaoImpl implements AccountDao {
 		}
 		return accountList;
 	}
+	
 	
 	public  ArrayList<Integer> getAllAccountNumber(int customerId) throws SQLException{
 		 con = Database.getInstance().getConnection();
@@ -65,6 +67,7 @@ public class AccountDaoImpl implements AccountDao {
 		}
 		return (ArrayList<Integer>) accountNumberList;
 	}
+	
 	public  int createMultiple(String name, String pass, int id) throws SQLException {
 		 con = Database.getInstance().getConnection();
 
@@ -76,4 +79,5 @@ public class AccountDaoImpl implements AccountDao {
 
 		return status;
 	}
+	
 }

@@ -8,7 +8,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import dao.CustomerDao;
+import service.CustomerService;
+import service.CustomerServiceImpl;
 
 /**
  * Servlet implementation class Register
@@ -16,7 +17,7 @@ import dao.CustomerDao;
 
 public class Register extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-
+	CustomerService customerService=new CustomerServiceImpl();
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -31,6 +32,7 @@ public class Register extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		
 		if(request.getParameter("name")=="" || request.getParameter("pass")==""){
 			request.setAttribute("errorMessage","please enter all details");
 			request.getRequestDispatcher("register.jsp").include(request, response);
@@ -51,7 +53,7 @@ public class Register extends HttpServlet {
 		
 		int m = 0;
 		try {
-			m = CustomerDao.chechUserName(name);
+			m = customerService.chechUserName(name);
 		} catch (SQLException e1) {
 			
 			e1.printStackTrace();
@@ -64,7 +66,7 @@ public class Register extends HttpServlet {
 			request.getRequestDispatcher("register.jsp").include(request, response);
 		} else {
 			try {
-				int status = CustomerDao.register(name, pass,email,birthDate,gender,mobileNumber);
+				int status = customerService.register(name, pass,email,birthDate,gender,mobileNumber);
 				if (status > 0) {
 					request.setAttribute("registerMessage", "You are successfully Registerd.");
 					request.getRequestDispatcher("index.jsp").include(request, response);

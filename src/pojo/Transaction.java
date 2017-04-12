@@ -1,49 +1,41 @@
 package pojo;
 
 public class Transaction {
-	int t_id;
+	int transactionId;
 	int amount;
-	int credited_acc;
-	int debited_acc;
+	int creditedAccount;
+	int debitedAccount;
 	String datetime;
-
-	public int getT_id() {
-		return t_id;
+	public int getTransactionId() {
+		return transactionId;
 	}
-
-	public void setT_id(int t_id) {
-		this.t_id = t_id;
+	public void setTransactionId(int transactionId) {
+		this.transactionId = transactionId;
 	}
-
 	public int getAmount() {
 		return amount;
 	}
-
 	public void setAmount(int amount) {
 		this.amount = amount;
 	}
-
-	public int getCredited_acc() {
-		return credited_acc;
+	public int getCreditedAccount() {
+		return creditedAccount;
 	}
-
-	public void setCredited_acc(int credited_acc) {
-		this.credited_acc = credited_acc;
+	public void setCreditedAccount(int creditedAccount) {
+		this.creditedAccount = creditedAccount;
 	}
-
-	public int getDebited_acc() {
-		return debited_acc;
+	public int getDebitedAccount() {
+		return debitedAccount;
 	}
-
-	public void setDebited_acc(int debited_acc) {
-		this.debited_acc = debited_acc;
+	public void setDebitedAccount(int debitedAccount) {
+		this.debitedAccount = debitedAccount;
 	}
-
 	public String getDatetime() {
 		return datetime;
 	}
-
 	public void setDatetime(String datetime) {
 		this.datetime = datetime;
 	}
+
+	
 }

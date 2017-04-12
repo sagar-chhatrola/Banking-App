@@ -3,7 +3,7 @@
     <jsp:include page="profile.html" /> 
 <%@ page import="dao.*" %>
 <%@ page import="pojo.*" %>
-<%@ page import="Service.*" %>
+<%@ page import="service.*" %>
 <%@ page import="java.util.*" %>
 <%@ page import="javax.servlet.http.HttpSession" %>
 <%@ page import="javax.servlet.http.HttpSession" %>
@@ -21,11 +21,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-<% HttpSession s=request.getSession(false);
- List<Transaction> transactionList=(List<Transaction>)s.getAttribute("transactionList");
- 
-%>
+<% %>
    <div> 
     <h2>Account History</h2>
     <br/>
@@ -59,9 +55,9 @@
        <c:forEach items="${transactionList}"  var="list">
            <tr>
            <td>${list.amount}</td>
-           <td>${list.credited_acc}</td>
-           <td>${list.debited_acc}</td>
-           <td>${list.t_id}</td>
+           <td>${list.creditedAccount}</td>
+           <td>${list.debitedAccount}</td>
+           <td>${list.transactionId}</td>
            <td>${list.datetime}</td>
            
            </tr>

@@ -8,6 +8,7 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" href="css/transaction.css">
+  <script src="js/ammountValidation.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
@@ -17,7 +18,7 @@
 <div class="container">
  <center> <h2>Enter Details</h2></center>
   
-  <form class="form-signin" action="DoTransaction" method="post">
+  <form class="form-signin" name="transactionForm" action="DoTransaction" method="post">
     <div class="form-group">
       <label for="usr">Your Account Number:</label>
        <select name="accountNumber" id="accountNumber">
@@ -42,7 +43,9 @@
       <label for="pwd">Enter Ammount:</label>
       <input type="text" class="form-control" id="usr" name="ammount">
       <br/>
-      <div style="color: #FF0000;">${errorMessage}</div>  
+      <div style="color: #FF0000;">${errorMassage}</div>  
+       
+      
         <button class="btn btn-lg btn-primary" type="submit">Transfer</button>
     </div>
   </form>
