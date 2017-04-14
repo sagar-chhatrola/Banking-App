@@ -17,5 +17,7 @@
 	<classpathentry kind="lib" path="C:/Users/sagar/Downloads/junit-4.12.jar"/>
 	<classpathentry kind="lib" path="C:/Users/sagar/Downloads/mockito-all-2.0.2-beta.jar"/>
 	<classpathentry kind="lib" path="C:/Users/sagar/Downloads/jstl-1.2-sources.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sagar/Downloads/javax.activation.jar"/>
+	<classpathentry kind="lib" path="C:/Users/sagar/Downloads/javax.mail.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

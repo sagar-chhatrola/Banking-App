@@ -9,8 +9,8 @@ $(document).ready(function(){
  
   jQuery.validator.addMethod("phoneno", function(value, element) {
 	  value = value.replace(/\s+/g, "");
-	    return this.optional(element) || value.length > 9 && 
-	    value.match("[0-9\-\(\)\s]+.");
+	    return this.optional(element) || value.length == 10 && 
+	    value.match("[0-9]");
 	}, "<br />Please specify a valid phone number");
 
 $(function() {

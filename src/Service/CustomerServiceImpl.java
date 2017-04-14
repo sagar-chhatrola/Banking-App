@@ -2,6 +2,7 @@ package service;
 
 import java.sql.Date;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import dao.CustomerDao;
 import dao.CustomerDaoImpl;
@@ -59,5 +60,28 @@ public class CustomerServiceImpl implements CustomerService {
 	public int transferAmmount(Integer ammount, Integer acc_no, Integer account_transfer, int id) throws SQLException {
 	
 		return customerDao.transferAmmount(ammount, acc_no, account_transfer, id);
+	}
+
+	@Override
+	public String checkUser(String userName, String password) {
+		
+		return null;
+	}
+
+	@Override
+	public ArrayList<Customer> getAllCustomer() throws SQLException {
+		return customerDao.getAllCustomer();
+	}
+
+	@Override
+	public ArrayList<Customer> getCustomerByType(boolean customerType) throws SQLException {
+		
+		return customerDao.getCustomerByType(customerType);
+	}
+
+	@Override
+	public void customerApprove(int customerId, boolean approve) throws SQLException {
+		 customerDao.customerApprove(customerId, approve);
+		
 	}
 }

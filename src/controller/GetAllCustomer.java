@@ -10,24 +10,24 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import pojo.Transaction;
-import service.TransactionService;
-import service.TransactionServiceImpl;
+import pojo.Customer;
+import service.CustomerService;
+import service.CustomerServiceImpl;
 
 /**
- * Servlet implementation class getTransactionHistoryByAjax
+ * Servlet implementation class GetAllCustomer
  */
-@WebServlet("/getTransactionHistoryByAjax")
-public class GetTransactionHistoryByAjax extends HttpServlet {
+@WebServlet("/GetAllCustomer")
+public class GetAllCustomer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	TransactionService transactionService=new TransactionServiceImpl();
+	List<Customer> allCustomerList;
+	CustomerService customerService=new CustomerServiceImpl();
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetTransactionHistoryByAjax() {
+    public GetAllCustomer() {
         super();
-        
+       
     }
 
 	/**
@@ -35,20 +35,19 @@ public class GetTransactionHistoryByAjax extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int accountNumber=Integer.parseInt(request.getParameter("accountNumber"));
-		System.out.println("hiii ");
-           List<Transaction> transactionList;
-           try {
-        	   
-        	   transactionList=new ArrayList<Transaction>();
-			transactionList=transactionService.listOfTransaction(accountNumber);
-	
-			 request.setAttribute("transactionList", transactionList);
-			 request.getRequestDispatcher("transactionHistory.jsp").forward(request, response);
+		
+		 try {
+			 allCustomerList=new ArrayList<Customer>();
+			allCustomerList=customerService.getAllCustomer();
+			 request.setAttribute("allCustomer", allCustomerList);
+			 request.getRequestDispatcher("admin.jsp").forward(request, response);
 		} catch (SQLException e) {
 			
 			e.printStackTrace();
 		}
+		
+		
+		 
 	}
 
 	/**

@@ -2,8 +2,6 @@ package controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -11,23 +9,22 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import pojo.Transaction;
-import service.TransactionService;
-import service.TransactionServiceImpl;
+import service.CustomerService;
+import service.CustomerServiceImpl;
 
 /**
- * Servlet implementation class getTransactionHistoryByAjax
+ * Servlet implementation class CustomerApprove
  */
-@WebServlet("/getTransactionHistoryByAjax")
-public class GetTransactionHistoryByAjax extends HttpServlet {
+@WebServlet("/CustomerApprove")
+public class CustomerApprove extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	TransactionService transactionService=new TransactionServiceImpl();
+	CustomerService customerService=new CustomerServiceImpl();
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetTransactionHistoryByAjax() {
+    public CustomerApprove() {
         super();
-        
+       
     }
 
 	/**
@@ -35,20 +32,18 @@ public class GetTransactionHistoryByAjax extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		int accountNumber=Integer.parseInt(request.getParameter("accountNumber"));
-		System.out.println("hiii ");
-           List<Transaction> transactionList;
-           try {
-        	   
-        	   transactionList=new ArrayList<Transaction>();
-			transactionList=transactionService.listOfTransaction(accountNumber);
-	
-			 request.setAttribute("transactionList", transactionList);
-			 request.getRequestDispatcher("transactionHistory.jsp").forward(request, response);
+		int customerId=Integer.parseInt(request.getParameter("customerId"));
+		boolean approve=Boolean.parseBoolean(request.getParameter("approve"));
+		System.out.println(customerId+"  "+approve);
+		try {
+			customerService.customerApprove(customerId, approve);
 		} catch (SQLException e) {
 			
 			e.printStackTrace();
 		}
+		request.setAttribute("customerType", request.getParameter("customerType"));
+		request.getRequestDispatcher("GetAllCustomerByAjax").forward(request, response);
+		
 	}
 
 	/**

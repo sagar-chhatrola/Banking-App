@@ -10,6 +10,15 @@ public class Customer {
 	private String gender;
 	private long mobileNumber;
     private Date date; 	
+    private boolean approve;
+
+	public boolean isApprove() {
+		return approve;
+	}
+
+	public void setApprove(boolean approve) {
+		this.approve = approve;
+	}
 
 	public String getEmail() {
 		return email;

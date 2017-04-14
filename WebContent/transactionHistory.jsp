@@ -21,7 +21,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<% %>
+
    <div> 
     <h2>Account History</h2>
     <br/>

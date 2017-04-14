@@ -67,7 +67,8 @@ public class Register extends HttpServlet {
 		} else {
 			try {
 				int status = customerService.register(name, pass,email,birthDate,gender,mobileNumber);
-				if (status > 0) {
+				System.out.println(status);
+				if (status>0) {
 					request.setAttribute("registerMessage", "You are successfully Registerd.");
 					request.getRequestDispatcher("index.jsp").include(request, response);
 					

@@ -9,27 +9,45 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Properties;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 import pojo.Customer;
 import utility.Database;
 
 public class CustomerDaoImpl implements CustomerDao {
-	Connection con =null;
-	public  int register(String name, String pass,String email,java.sql.Date birthDate,String gender,Long mobileNumber) throws SQLException {
-		 con = Database.getInstance().getConnection();
-
-		String query = "insert into bank.cust_details (name,password,email,gender,mobileNumber,dateOfBirth)values(?,?,?,?,?,?)";
-		PreparedStatement st = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+	String name = "";
+	String email = "";
+	String password = "";
+	Connection con = null;
+	Properties props = new Properties();
 	
+
+	public int register(String name, String pass, String email, java.sql.Date birthDate, String gender,
+			Long mobileNumber) throws SQLException {
+		con = Database.getInstance().getConnection();
+
+		String query = "insert into bank.cust_details (name,password,email,gender,mobileNumber,dateOfBirth,approve)values(?,?,?,?,?,?,?)";
+		PreparedStatement st = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
+
 		st.setString(1, name);
 		st.setString(2, pass);
 		st.setString(3, email);
 		st.setString(4, gender);
-		st.setLong(5,mobileNumber);
-		st.setDate(6,birthDate);
+		st.setLong(5, mobileNumber);
+		st.setDate(6, birthDate);
+		st.setBoolean(7, false);
 		int status = st.executeUpdate();
+		System.out.println(status);
 		int customerId = 0;
-		if (status == 1) {
+		if (status > 0) {
 			ResultSet rs = st.getGeneratedKeys();
 			while (rs.next()) {
 				customerId = rs.getInt(1);
@@ -43,9 +61,9 @@ public class CustomerDaoImpl implements CustomerDao {
 		return status;
 	}
 
-	public  int signIn(String name, String pass) throws SQLException {
-		String query = "select password from bank.cust_details where name='" + name + "'";
-		 con = Database.getInstance().getConnection();
+	public int signIn(String name, String pass) throws SQLException {
+		String query = "select password from bank.cust_details where name='" + name + "' and approve=1";
+		con = Database.getInstance().getConnection();
 		Statement st = con.createStatement();
 		ResultSet rs = st.executeQuery(query);
 		int status = 0;
@@ -58,10 +76,10 @@ public class CustomerDaoImpl implements CustomerDao {
 		return status;
 	}
 
-	public  int getCustomerId(String userName) throws Exception {
-		
+	public int getCustomerId(String userName) throws Exception {
+
 		String query = "select cust_id from bank.cust_details where name='" + userName + "'";
-		 con = Database.getInstance().getConnection();
+		con = Database.getInstance().getConnection();
 		Statement st = con.createStatement();
 		ResultSet rs = st.executeQuery(query);
 		if (rs.next()) {
@@ -71,10 +89,10 @@ public class CustomerDaoImpl implements CustomerDao {
 		return 0;
 	}
 
-	public  String getUserName(int customerId) throws SQLException {
-		
+	public String getUserName(int customerId) throws SQLException {
+
 		String query = "select name from bank.cust_details where cust_id=" + customerId + "";
-		 con = Database.getInstance().getConnection();
+		con = Database.getInstance().getConnection();
 		Statement st = con.createStatement();
 		ResultSet rs = st.executeQuery(query);
 		String name = null;
@@ -85,12 +103,8 @@ public class CustomerDaoImpl implements CustomerDao {
 
 	}
 
-	
-
-	
-
-	public  int chechUserName(String userName) throws SQLException {
-		 con = Database.getInstance().getConnection();
+	public int chechUserName(String userName) throws SQLException {
+		con = Database.getInstance().getConnection();
 		Statement st = con.createStatement();
 		String query = "select name from cust_details";
 		ResultSet rs = st.executeQuery(query);
@@ -103,59 +117,58 @@ public class CustomerDaoImpl implements CustomerDao {
 		}
 		return 0;
 
-	}	
-	
-	public  Customer getUserProfile(int customerId) throws SQLException{
-		 con = Database.getInstance().getConnection();
-		Statement st=con.createStatement();
-		String query="select name,email,gender,mobileNumber,dateOfBirth,password from bank.cust_details where cust_id='"+customerId+"'";
+	}
+
+	public Customer getUserProfile(int customerId) throws SQLException {
+		con = Database.getInstance().getConnection();
+		Statement st = con.createStatement();
+		String query = "select name,email,gender,mobileNumber,dateOfBirth,password from bank.cust_details where cust_id='"
+				+ customerId + "'";
 		ResultSet rs = st.executeQuery(query);
 		Customer customer = null;
-		while(rs.next()){
-			customer=new Customer();
+		while (rs.next()) {
+			customer = new Customer();
 			customer.setName(rs.getString("name"));
 			customer.setEmail(rs.getString("email"));
 			customer.setGender(rs.getString("gender"));
 			customer.setMobileNumber(rs.getLong("mobileNumber"));
 			customer.setDate(rs.getDate("dateOfBirth"));
 			customer.setPass(rs.getString("password"));
-			
+
 		}
 		return customer;
 	}
-	
-	public  int updateProfile(String userName,String email,String password,String gender,Long mobileNumber,Date birthDate,int customerId) throws SQLException{
-		 con = Database.getInstance().getConnection();
-		String query="update bank.cust_details set name=?,password=?,email=?,gender=?,mobileNumber=?,dateOfbirth=? where cust_id=?";
-				
-		PreparedStatement ps=con.prepareStatement(query);
+
+	public int updateProfile(String userName, String email, String password, String gender, Long mobileNumber,
+			Date birthDate, int customerId) throws SQLException {
+		con = Database.getInstance().getConnection();
+		String query = "update bank.cust_details set name=?,password=?,email=?,gender=?,mobileNumber=?,dateOfbirth=? where cust_id=?";
+
+		PreparedStatement ps = con.prepareStatement(query);
 		ps.setString(1, userName);
 		ps.setString(2, password);
 		ps.setString(3, email);
 		ps.setString(4, gender);
 		ps.setLong(5, mobileNumber);
 		ps.setDate(6, birthDate);
-        ps.setInt(7, customerId);
+		ps.setInt(7, customerId);
 
-
-		int status=ps.executeUpdate();
+		int status = ps.executeUpdate();
 		return status;
 	}
-	
-public int transferAmmount(Integer ammount, Integer acc_no, Integer account_transfer, int id) throws SQLException {
-		
-		Connection con = Database.getInstance().getConnection();
+
+	public int transferAmmount(Integer ammount, Integer acc_no, Integer account_transfer, int id) throws SQLException {
+
+		con = Database.getInstance().getConnection();
 		Statement st = con.createStatement();
 		int n = 0;
-		if (ammount>0) {
+		if (ammount > 0) {
 
 			String str = "select * from bank.account where acc_no=" + acc_no + "";
 
 			System.out.println(str);
 
 			ResultSet rs = st.executeQuery(str);
-
-			
 
 			while (rs.next()) {
 				if (rs.getInt(3) >= ammount && ammount != null) {
@@ -178,7 +191,7 @@ public int transferAmmount(Integer ammount, Integer acc_no, Integer account_tran
 					st1.executeUpdate(debit);
 					n = 1;
 					String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
-					
+
 					String history_query = "insert into bank.transcation (amount,credited_acc,debited_acc,datetime) values('"
 							+ ammount + "','" + account_transfer + "','" + acc_no + "','" + timeStamp + "')";
 
@@ -191,4 +204,144 @@ public int transferAmmount(Integer ammount, Integer acc_no, Integer account_tran
 		return n;
 
 	}
+
+	@Override
+	public String checkUser(String name, String password) throws SQLException {
+		con = Database.getInstance().getConnection();
+		Statement st = con.createStatement();
+
+		return null;
+	}
+
+	@Override
+	public ArrayList<Customer> getAllCustomer() throws SQLException {
+		con = Database.getInstance().getConnection();
+		Statement st = con.createStatement();
+		String query = "select * from bank.cust_details";
+		ResultSet rs = st.executeQuery(query);
+		ArrayList<Customer> customerList=null;
+		Customer customer=null;
+		customerList = new ArrayList<Customer>();
+		while (rs.next()) {
+			customer = new Customer();
+			customer.setId(rs.getInt("cust_id"));
+			customer.setName(rs.getString("name"));
+			customer.setEmail(rs.getString("email"));
+			customer.setGender(rs.getString("gender"));
+			customer.setMobileNumber(rs.getLong("mobileNumber"));
+			customer.setDate(rs.getDate("dateOfBirth"));
+			customer.setApprove(rs.getBoolean("approve"));
+			customerList.add(customer);
+		}
+		System.out.println("all customer"+customerList.size());
+		return customerList;
+	}
+
+	public ArrayList<Customer> getCustomerByType(boolean customerType) throws SQLException {
+		con = Database.getInstance().getConnection();
+		String query = "select * from bank.cust_details where approve=? ";
+		PreparedStatement pst = con.prepareStatement(query);
+		pst.setBoolean(1, customerType);
+		ResultSet rs = pst.executeQuery();
+		ArrayList<Customer> customerList=null;
+		Customer customer=null;
+		customerList = new ArrayList<Customer>();
+		while (rs.next()) {
+			customer = new Customer();
+			customer.setId(rs.getInt("cust_id"));
+			customer.setName(rs.getString("name"));
+			customer.setEmail(rs.getString("email"));
+			customer.setGender(rs.getString("gender"));
+			customer.setMobileNumber(rs.getLong("mobileNumber"));
+			customer.setDate(rs.getDate("dateOfBirth"));
+			customer.setApprove(rs.getBoolean("approve"));
+			customerList.add(customer);
+		}
+		System.out.println("condition customer"+customerList.size());
+		return customerList;
+	}
+
+	@Override
+	public void customerApprove(int customerId, boolean approve) throws SQLException {
+		con = Database.getInstance().getConnection();
+
+		String query = "update bank.cust_details set approve=? where cust_id=?";
+		String query1 = "select email,name,password from bank.cust_details where cust_id=?";
+		PreparedStatement pst = con.prepareStatement(query);
+		PreparedStatement pst1 = con.prepareStatement(query1);
+		pst1.setInt(1, customerId);
+		ResultSet rs = pst1.executeQuery();
+		while (rs.next()) {
+			name = rs.getString("name");
+			password = rs.getString("password");
+			email = rs.getString("email");
+		}
+		if (approve == true) {
+			props.put("mail.smtp.host", "smtp.gmail.com");
+			props.put("mail.smtp.socketFactory.port", "465");
+			props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+			props.put("mail.smtp.auth", "true");
+			props.put("mail.smtp.port", "465");
+			props.put("mail.smtp.socketFactory.fallback", "false");
+			props.put("mail.smtp.starttls.enable", "true");
+			Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+				@Override
+				protected PasswordAuthentication getPasswordAuthentication() {
+					return new PasswordAuthentication("sagar@aimdek.com", "sagar@12345");
+				}
+			});
+
+			try {
+
+				Message message = new MimeMessage(session);
+				message.setFrom(new InternetAddress("sagar@aimdek.com"));
+				message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
+				message.setSubject("Account Approval");
+				message.setText("Hello " + name + "\nYour MyBank account is Deactivated now for security reasons.");
+				Transport.send(message);
+				System.out.println("Done");
+
+			} catch (MessagingException e) {
+				throw new RuntimeException(e);
+			}
+			pst.setBoolean(1, false);
+			
+
+		} else {
+			props.put("mail.smtp.host", "smtp.gmail.com");
+			props.put("mail.smtp.socketFactory.port", "465");
+			props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+			props.put("mail.smtp.auth", "true");
+			props.put("mail.smtp.port", "465");
+			props.put("mail.smtp.socketFactory.fallback", "false");
+			props.put("mail.smtp.starttls.enable", "true");
+			Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+				@Override
+				protected PasswordAuthentication getPasswordAuthentication() {
+					return new PasswordAuthentication("sagar@aimdek.com", "sagar@12345");
+				}
+			});
+
+			try {
+
+				Message message = new MimeMessage(session);
+				message.setFrom(new InternetAddress("sagar@aimdek.com"));
+				message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
+				message.setSubject("Account Approval");
+				message.setText("Congratulation " + name
+						+ "\nYour MyBank account is activated now.\n.You can now login with below credential.\n UserName:"
+						+ name + "\nPassword:" + password);
+				Transport.send(message);
+				System.out.println("Done");
+
+			} catch (MessagingException e) {
+				throw new RuntimeException(e);
+			}
+			pst.setBoolean(1, true);
+		}
+		pst.setInt(2, customerId);
+		pst.executeUpdate();
+
+	}
+
 }

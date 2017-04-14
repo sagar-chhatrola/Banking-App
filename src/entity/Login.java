@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import pojo.Customer;
+import service.AdminService;
+import service.AdminServiceImpl;
 import service.CustomerService;
 import service.CustomerServiceImpl;
 
@@ -20,6 +22,7 @@ import service.CustomerServiceImpl;
 public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	CustomerService customerService=new CustomerServiceImpl();
+	AdminService adminService=new AdminServiceImpl();
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -37,36 +40,68 @@ public class Login extends HttpServlet {
         
 		response.setContentType("text/html");
 		String name = request.getParameter("name");
-		String pass = request.getParameter("pass");
-       
+		String password = request.getParameter("pass");
+	
+		int isAdmin = 0;
 		try {
-			int status = customerService.signIn(name, pass);
-			if (status == 1) {
-				Customer customer = new Customer();
-				customer.setName(name);
-				customer.setPass(pass);
-
-				int customerId = customerService.getCustomerId(name);
-				customer.setId(customerId);
-				
-				Customer loginUser=customerService.getUserProfile(customerId);
-				HttpSession session = request.getSession();
-				session.setAttribute("loginUser",loginUser);
-				session.setAttribute("customerId",customerId);
-				session.setAttribute("customer", customer);
-				response.sendRedirect("profile.jsp");
-			} else {
-
-				request.setAttribute("errorMessage", "invalid username or password");
-				request.getRequestDispatcher("login.jsp").include(request, response);
-			}
+			isAdmin = adminService.isAdmin(name);
+		} catch (SQLException e1) {
+			
+			e1.printStackTrace();
+		}
+		
+		int status=0;
+		if(isAdmin==1){
+		 try {
+			status=adminService.adminLogin(name, password);
 		} catch (SQLException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
+			
 			e.printStackTrace();
 		}
-	}
+		if (status == 1) {
+			HttpSession session = request.getSession();
+			session.setAttribute("adminName",name);
+			
+			response.sendRedirect("GetAllCustomer");
+		} else {
 
+			request.setAttribute("errorMessage", "invalid username or password");
+			request.getRequestDispatcher("login.jsp").include(request, response);
+		}
+			
+	    }
+		else{
+			try {
+			 status = customerService.signIn(name, password);
+			System.out.println("hii"+status);
+				if (status == 1) {
+					Customer customer = new Customer();
+					customer.setName(name);
+					customer.setPass(password);
+
+					int customerId = customerService.getCustomerId(name);
+					customer.setId(customerId);
+					
+					Customer loginUser=customerService.getUserProfile(customerId);
+					HttpSession session = request.getSession();
+					session.setAttribute("loginUser",loginUser);
+					session.setAttribute("customerId",customerId);
+					session.setAttribute("customer", customer);
+					response.sendRedirect("profile.jsp");
+				} else {
+
+					request.setAttribute("errorMessage", "invalid username or password");
+					request.getRequestDispatcher("login.jsp").include(request, response);
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+	}
+	
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
 	 *      response)
