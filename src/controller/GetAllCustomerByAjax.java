@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import pojo.Account;
 import pojo.Customer;
 import service.CustomerService;
 import service.CustomerServiceImpl;
@@ -21,6 +22,7 @@ import service.CustomerServiceImpl;
 public class GetAllCustomerByAjax extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	ArrayList<Customer> allCustomerList;
+	
 	CustomerService customerService=new CustomerServiceImpl();
     /**
      * @see HttpServlet#HttpServlet()
@@ -36,11 +38,11 @@ public class GetAllCustomerByAjax extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String customerType=request.getParameter("customerType");
 		System.out.println(customerType+"   hii");
-		
 		 allCustomerList=new ArrayList<Customer>();
 		 try {
 			if(customerType.equals("1"))
 		 {
+				
 			 allCustomerList=customerService.getAllCustomer();
 			 System.out.println("All");
 		 }

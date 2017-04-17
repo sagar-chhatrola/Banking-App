@@ -21,6 +21,7 @@ Choose Type: <select name="customerType" id="customerType">
                   <option value="3">Non-Approved</option>
                </select>
 </div>
+
  <div id="customerList">
  
  <data>
@@ -49,14 +50,20 @@ Choose Type: <select name="customerType" id="customerType">
            <td>${list.mobileNumber}</td>
            <td>${list.date}</td>
           <td><a href="CustomerApprove?customerId=${list.id}&approve=${list.approve}&customerType=1" class="btn btn-primary">${list.approve}</a></td>
-          
-          </tr>
-         </c:forEach>
+           <td>
+        <a class="btn btn-info" onclick="javascript:onClick(this)" data-toggle="collapse"  data-value="${list.id}" href="#${list.id}">
+        Show Accounts</a>
+        
+         <div id="${list.id}">
+           
          
-    
+         </div>
+   </td>
+          </tr>
+			</c:forEach>
+        
          </tbody>
-			</table>
-			
+			</table> 
 		<script type="text/javascript">
             $('#customerType').change (
             function() {
@@ -71,7 +78,24 @@ Choose Type: <select name="customerType" id="customerType">
                 });
             }
         );
+            
+      
+            
+            function onClick(item) {
+                	var value = item.getAttribute("data-value");
+                    $.get("GetAccountInfoList", {
+                    	customerId:value
+                   }, function(responseText) {
+                       $("#"+value).html(responseText);
+                    });
+                };
+           
+            
+            
+            
         </script>
+        
+         
 			
 </data>
 </div>

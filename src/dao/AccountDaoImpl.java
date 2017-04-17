@@ -23,14 +23,16 @@ public class AccountDaoImpl implements AccountDao {
 
 		ResultSet rs = st.executeQuery(query);
 		int accountNo, balance;
+		boolean approve;
 		while (rs.next()) {
 
 			accountNo = rs.getInt("acc_no");
 			balance = rs.getInt("balance");
-
+            approve=rs.getBoolean("approve");
 			Account account = new Account();
 			account.accountNumber = accountNo;
 			account.balance = balance;
+			account.approve=approve;
 			accountList.add(account);
 
 		}
