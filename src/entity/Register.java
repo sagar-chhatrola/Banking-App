@@ -59,7 +59,7 @@ public class Register extends HttpServlet {
 			e1.printStackTrace();
 		}
 		if (m == 1) {
-			request.setAttribute("errorMessage", "username is already exist");
+			request.setAttribute("userName", "username is already exist");
 			request.getRequestDispatcher("register.jsp").include(request, response);
 		} else if (name == null || pass == null) {
 			request.setAttribute("errorMessage", "enter valid username and password");

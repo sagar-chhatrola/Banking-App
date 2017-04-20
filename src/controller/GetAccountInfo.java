@@ -36,11 +36,11 @@ public class GetAccountInfo extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession s=request.getSession(false);
+		HttpSession session=request.getSession(false);
 		int id;
-		   if(s.getAttribute("customer")!=null){
+		   if(session.getAttribute("customer")!=null){
 		   
-				Customer c1=(Customer)s.getAttribute("customer");
+				Customer c1=(Customer)session.getAttribute("customer");
 				 id=c1.getId(); 
 				
 				try {
@@ -49,9 +49,9 @@ public class GetAccountInfo extends HttpServlet {
 					
 					e.printStackTrace();
 				}
-				request.setAttribute("successTransfer", "Successfully Transfered");
-				request.setAttribute("accountInfoList", accountInfoList);
-				request.getRequestDispatcher("account.jsp").forward(request, response);
+				//request.setAttribute("successTransfer", "Successfully Transfered");
+				session.setAttribute("accountInfoList", accountInfoList);
+				response.sendRedirect("account.jsp");
 				
 				
 		  }

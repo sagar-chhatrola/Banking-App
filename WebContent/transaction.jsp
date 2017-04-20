@@ -41,11 +41,11 @@
     </div>
     <div class="form-group">
       <label for="pwd">Enter Ammount:</label>
-      <input type="text" class="form-control" id="usr" name="ammount">
+      <input type="text" class="form-control" id="ammount" name="ammount">
+      <div style="color: #FF0000;">${errmsg}</div>  
       <br/>
       <div style="color: #FF0000;">${errorMassage}</div>  
-       
-      
+    
         <button class="btn btn-lg btn-primary" type="submit">Transfer</button>
     </div>
   </form>

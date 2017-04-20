@@ -62,10 +62,11 @@ public class CustomerDaoImpl implements CustomerDao {
 	}
 
 	public int signIn(String name, String pass) throws SQLException {
-		String query = "select password from bank.cust_details where name='" + name + "' and approve=1";
+		String query = "select password from bank.cust_details where name=?and approve=1";
 		con = Database.getInstance().getConnection();
-		Statement st = con.createStatement();
-		ResultSet rs = st.executeQuery(query);
+		PreparedStatement pst = con.prepareStatement(query);
+		pst.setString(1, name);
+		ResultSet rs = pst.executeQuery();
 		int status = 0;
 		while (rs.next()) {
 			String pass1 = rs.getString("password");
@@ -78,10 +79,11 @@ public class CustomerDaoImpl implements CustomerDao {
 
 	public int getCustomerId(String userName) throws Exception {
 
-		String query = "select cust_id from bank.cust_details where name='" + userName + "'";
+		String query = "select cust_id from bank.cust_details where name=?";
 		con = Database.getInstance().getConnection();
-		Statement st = con.createStatement();
-		ResultSet rs = st.executeQuery(query);
+		PreparedStatement pst = con.prepareStatement(query);
+		pst.setString(1, userName);
+		ResultSet rs = pst.executeQuery();
 		if (rs.next()) {
 			int id = rs.getInt("cust_id");
 			return id;
@@ -91,10 +93,11 @@ public class CustomerDaoImpl implements CustomerDao {
 
 	public String getUserName(int customerId) throws SQLException {
 
-		String query = "select name from bank.cust_details where cust_id=" + customerId + "";
+		String query = "select name from bank.cust_details where cust_id=?";
 		con = Database.getInstance().getConnection();
-		Statement st = con.createStatement();
-		ResultSet rs = st.executeQuery(query);
+		PreparedStatement pst = con.prepareStatement(query);
+		pst.setInt(1, customerId);
+		ResultSet rs = pst.executeQuery();
 		String name = null;
 		while (rs.next()) {
 			name = rs.getString("name");
@@ -121,10 +124,11 @@ public class CustomerDaoImpl implements CustomerDao {
 
 	public Customer getUserProfile(int customerId) throws SQLException {
 		con = Database.getInstance().getConnection();
-		Statement st = con.createStatement();
-		String query = "select name,email,gender,mobileNumber,dateOfBirth,password from bank.cust_details where cust_id='"
-				+ customerId + "'";
-		ResultSet rs = st.executeQuery(query);
+		
+		String query = "select name,email,gender,mobileNumber,dateOfBirth,password from bank.cust_details where cust_id=?";
+		PreparedStatement pst = con.prepareStatement(query);
+		pst.setInt(1, customerId);
+		ResultSet rs = pst.executeQuery();
 		Customer customer = null;
 		while (rs.next()) {
 			customer = new Customer();
@@ -160,42 +164,54 @@ public class CustomerDaoImpl implements CustomerDao {
 	public int transferAmmount(Integer ammount, Integer acc_no, Integer account_transfer, int id) throws SQLException {
 
 		con = Database.getInstance().getConnection();
-		Statement st = con.createStatement();
+		PreparedStatement pst ;
 		int n = 0;
 		if (ammount > 0) {
 
-			String str = "select * from bank.account where acc_no=" + acc_no + "";
-
+			String str = "select * from bank.account where acc_no=?";
+			pst= con.prepareStatement(str);
+			pst.setInt(1, acc_no);
 			System.out.println(str);
 
-			ResultSet rs = st.executeQuery(str);
+			ResultSet rs = pst.executeQuery();
 
 			while (rs.next()) {
 				if (rs.getInt(3) >= ammount && ammount != null) {
 					Integer balance1 = rs.getInt(3);
 					System.out.println(balance1);
-					Statement st1 = con.createStatement();
+					
 
-					String credit = "update bank.account set balance='" + balance1 + "'-'" + ammount + "'where acc_no='"
-							+ acc_no + "'";
-					st1.executeUpdate(credit);
+					String credit = "update bank.account set balance=?-? where acc_no=?";
+					PreparedStatement pst1 = con.prepareStatement(credit);
+					pst1.setInt(1, balance1);
+					pst1.setInt(2, ammount);
+					pst1.setInt(3, acc_no);
+					pst1.executeUpdate();
 					System.out.println(credit);
-					String str1 = "select balance from bank.account where acc_no=" + account_transfer + "";
-					ResultSet rs1 = st1.executeQuery(str1);
+					String str1 = "select balance from bank.account where acc_no=?";
+					pst1=con.prepareStatement(str1);
+					pst1.setInt(1, account_transfer);
+					ResultSet rs1 = pst1.executeQuery();
 					int balance2 = 0;
 					while (rs1.next()) {
 						balance2 = rs1.getInt("balance");
 					}
+					Statement st1=con.createStatement();
 					String debit = "update bank.account set balance='" + balance2 + "'+'" + ammount + "'where acc_no='"
 							+ account_transfer + "'";
 					st1.executeUpdate(debit);
 					n = 1;
 					String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
 
-					String history_query = "insert into bank.transcation (amount,credited_acc,debited_acc,datetime) values('"
-							+ ammount + "','" + account_transfer + "','" + acc_no + "','" + timeStamp + "')";
-
-					st1.execute(history_query);// return 1;
+					 
+					   String history_query = "insert into bank.transcation (amount,credited_acc,debited_acc,datetime) values(?,?,?,?)";
+			                    pst1=con.prepareStatement(history_query);
+			                   pst1.setInt(1,ammount);
+			                   pst1.setInt(2,acc_no);
+			                   pst1.setInt(3,account_transfer);
+			                   pst1.setString(4, timeStamp);
+			                   
+								pst1.execute();// return 1;
 				} else {
 					n = 0;
 				}
@@ -284,7 +300,7 @@ public class CustomerDaoImpl implements CustomerDao {
 			props.put("mail.smtp.port", "465");
 			props.put("mail.smtp.socketFactory.fallback", "false");
 			props.put("mail.smtp.starttls.enable", "true");
-			Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+			Session session = Session.getInstance(props, new javax.mail.Authenticator() {
 				@Override
 				protected PasswordAuthentication getPasswordAuthentication() {
 					return new PasswordAuthentication("sagar@aimdek.com", "sagar@12345");
@@ -315,7 +331,7 @@ public class CustomerDaoImpl implements CustomerDao {
 			props.put("mail.smtp.port", "465");
 			props.put("mail.smtp.socketFactory.fallback", "false");
 			props.put("mail.smtp.starttls.enable", "true");
-			Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+			Session session = Session.getInstance(props, new javax.mail.Authenticator() {
 				@Override
 				protected PasswordAuthentication getPasswordAuthentication() {
 					return new PasswordAuthentication("sagar@aimdek.com", "sagar@12345");

@@ -12,7 +12,20 @@
   <script src="js/accountShow.js"></script>
 </head>
 <body>
-<a href="LogOut.jsp" class="btn btn-primary" styele="float:right" >LogOut</a>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand">Bank Admin</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a href="GetAllCustomer">Home</a></li>
+      <li><a href="#">Account</a></li>
+      <li style="float:right" ><a href="LogOut.jsp" >LogOut</a></li>
+    </ul>
+  </div>
+</nav>
+  
+
 <center><h1>Customer List</h1></center>
 <div>
 Choose Type: <select name="customerType" id="customerType">
@@ -34,8 +47,8 @@ Choose Type: <select name="customerType" id="customerType">
             <th>Gender</th>
             <th>Mobile</th>
             <th>BirthDate</th>
-            <th>Approve</th>
-            <th>Show</th>
+            <th>Status</th>
+            <th>Show Details</th>
             
             
         </tr>
@@ -49,7 +62,14 @@ Choose Type: <select name="customerType" id="customerType">
            <td>${list.gender}</td>
            <td>${list.mobileNumber}</td>
            <td>${list.date}</td>
-          <td><a href="CustomerApprove?customerId=${list.id}&approve=${list.approve}&customerType=1" class="btn btn-primary">${list.approve}</a></td>
+          <td><a href="CustomerApprove?customerId=${list.id}&approve=${list.approve}&customerType=1" class="btn btn-primary"><c:choose >
+             <c:when test="${list.approve==false}">
+             Disapprove
+             </c:when>
+             <c:otherwise>
+             Approved
+             </c:otherwise>
+</c:choose></a></td>
            <td>
         <a class="btn btn-info" onclick="javascript:onClick(this)" data-toggle="collapse"  data-value="${list.id}" href="#${list.id}">
         Show Accounts</a>

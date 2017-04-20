@@ -39,7 +39,7 @@
 <div class="wrapper" id="history">
     
        
-      <data>
+     
        <table class="table">
 		<thead>
         <tr>
@@ -73,13 +73,13 @@
                     url: "getTransactionHistoryByAjax",
                     data: {accountNumber: document.getElementById("accountNumber").value},
                     success: function(data){               
-            	        $("#history").html($(data).find("data").html());
+            	        $("#history").html(data);
             	    }
                 });
             }
         );
 </script>
-	</data>	
+	
 			
   </div>
   

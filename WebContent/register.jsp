@@ -30,7 +30,7 @@
                 <div class="form-group">
                  <label for="usr">UserName:</label>
                  <input type="text" class="form-control" id="usr" name="name">
-                   <div style="color: #FF0000;">${errorMessage}</div>
+                   <div style="color: #FF0000;">${userName}</div>
                 </div>
                 <div class="form-group">
                  <label for="usr">Email:</label>

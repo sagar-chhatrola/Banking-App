@@ -32,8 +32,8 @@ public class DoTransaction extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		
-		HttpSession s = request.getSession(false);
-		if (s.getAttribute("customer") != null) {
+		HttpSession session = request.getSession(false);
+		if (session.getAttribute("customer") != null) {
 			
 			if (request.getParameter("anotherAccountNumber") != "" && request.getParameter("accountNumber") != ""
 					&& request.getParameter("ammount") != "" && Validate.checkNumber((request.getParameter("accountNumber")))
@@ -44,12 +44,12 @@ public class DoTransaction extends HttpServlet {
 				int accountNumberTransfer = Integer.parseInt(request.getParameter("anotherAccountNumber"));
 
 				try {
-					Customer customer = (Customer) s.getAttribute("customer");
+					Customer customer = (Customer) session.getAttribute("customer");
 					int id = customer.getId();
 					
 					int status = cs.transferAmmount(ammount, accountNumber, accountNumberTransfer, id);
 					if (status > 0) {
-						request.setAttribute("errorMessage", "Successfully Transfered!!");
+						session.setAttribute("successTransfer", "Successfully Transfered!!");
 						response.sendRedirect("GetAccountInfo");
 					} else {
 						request.setAttribute("errorMassage",

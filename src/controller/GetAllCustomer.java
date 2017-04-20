@@ -10,6 +10,8 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import pojo.Customer;
 import service.CustomerService;
 import service.CustomerServiceImpl;
@@ -37,10 +39,11 @@ public class GetAllCustomer extends HttpServlet {
 		
 		
 		 try {
+			 HttpSession session =request.getSession(false);
 			 allCustomerList=new ArrayList<Customer>();
 			allCustomerList=customerService.getAllCustomer();
-			 request.setAttribute("allCustomer", allCustomerList);
-			 request.getRequestDispatcher("admin.jsp").forward(request, response);
+			 session.setAttribute("allCustomer", allCustomerList);
+			 response.sendRedirect("admin.jsp");
 		} catch (SQLException e) {
 			
 			e.printStackTrace();

@@ -17,7 +17,7 @@ import pojo.Customer;
 /**
  * Servlet Filter implementation class SessionMaintainFilter
  */
-@WebFilter(urlPatterns={"/GetAccountInfo","/account.jsp","/transactionHistory.jsp","/createMultiple.jsp","/LogOut.jsp","/profile.jsp","/transaction.jsp","/profile.html"}
+@WebFilter(urlPatterns={"/GetAccountInfo","/account.jsp","/transactionHistory.jsp","/createMultiple.jsp","/profile.jsp","/transaction.jsp","/profile.html"}
           
 		)
 public class SessionMaintainFilter implements Filter {
