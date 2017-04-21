@@ -8,9 +8,11 @@
 <title>Insert title here</title>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" href="css/transaction.css">
-  <script src="js/ammountValidation.js"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="js/ammountValidation.js"></script>
 </head>
 <body style="background-image: url(images/bank.jpg);background-repeat:no-repeat;background-size: cover;">
 <jsp:include page="profile.html" /> 
@@ -18,10 +20,11 @@
 <div class="container">
  <center> <h2>Enter Details</h2></center>
   
-  <form class="form-signin" name="transactionForm" action="DoTransaction" method="post">
+  <form class="form-signin" id="transactionForm"name="transactionForm" action="DoTransaction" method="post">
     <div class="form-group">
       <label for="usr">Your Account Number:</label>
-       <select name="accountNumber" id="accountNumber">
+       <select name="accountNumber" id="accountNumber" class="required">
+       <option value="" >select account number</option>
                  <c:forEach items="${accountNumberList}"  var="list">
                     <option value="${list}" >
                        ${list}
@@ -31,12 +34,8 @@
     </div>
     <div class="form-group">
       <label for="usr">Account number which number to Transfer:</label>
-       <select name="anotherAccountNumber" id="anotherAccountNumber">
-                 <c:forEach items="${allAccountNumberList}"  var="list">
-                    <option value="${list}" >
-                       ${list}
-                    </option>
-                 </c:forEach>
+       <select name="anotherAccountNumber" id="anotherAccountNumber" class="required">
+       <option  value="">select account number</option>
        </select>
     </div>
     <div class="form-group">
@@ -44,13 +43,34 @@
       <input type="text" class="form-control" id="ammount" name="ammount">
       <div style="color: #FF0000;">${errmsg}</div>  
       <br/>
-      <div style="color: #FF0000;">${errorMassage}</div>  
+      <div style="color: #FF0000;">${validation}</div>  
     
         <button class="btn btn-lg btn-primary" type="submit">Transfer</button>
     </div>
+    
   </form>
+  
     </div>
   </div>
+ <script type="text/javascript">
 
+   $('#accountNumber').change(
+		   function(){	   
+	   var value=$("#accountNumber").val();
+	   $.ajax({
+		   type:"GET",
+		   url:"GetAccountNumberDropDown",
+		   data:{accountNumber:value},
+		   success:function(data){
+			   
+			   $('#anotherAccountNumber').html(data);
+		   }
+		   
+	   });
+  }
+  );
+</script>
+ <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
 </body>
 </html>

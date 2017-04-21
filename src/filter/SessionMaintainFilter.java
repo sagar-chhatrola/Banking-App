@@ -17,7 +17,7 @@ import pojo.Customer;
 /**
  * Servlet Filter implementation class SessionMaintainFilter
  */
-@WebFilter(urlPatterns={"/GetAccountInfo","/account.jsp","/transactionHistory.jsp","/createMultiple.jsp","/profile.jsp","/transaction.jsp","/profile.html"}
+@WebFilter(urlPatterns={"/GetAccountInfo","/account.jsp","/transactionHistory.jsp","/createMultiple.jsp","/profile.jsp","/transaction.jsp","/profile.html","/GetTransactionHistory","/GetAllAccountNumberList"}
           
 		)
 public class SessionMaintainFilter implements Filter {
@@ -44,9 +44,9 @@ public class SessionMaintainFilter implements Filter {
           HttpServletResponse httpResponse=(HttpServletResponse)response;
           HttpSession session=httpRequest.getSession(false);
           System.out.println(session);
-          Customer customer=(Customer) session.getAttribute("customer");
+          //Customer customer=(Customer) session.getAttribute("customer");
           
-          if(customer==null)
+          if((Customer)session.getAttribute("customer")==null)
           {
         	  session.setAttribute("errorMessage", "Please login first");
         	 httpResponse.sendRedirect("login.jsp");

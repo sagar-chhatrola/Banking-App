@@ -34,5 +34,11 @@ public class AccountServiceImpl implements AccountService{
 		return accountDao.createMultiple(name, pass, id);
 	}
 
+	@Override
+	public ArrayList<Integer> getAccountNumberDropDown(int accountNumber) throws SQLException {
+		
+		return accountDao.getAccountNumberDropDown(accountNumber);
+	}
+
 	
 }

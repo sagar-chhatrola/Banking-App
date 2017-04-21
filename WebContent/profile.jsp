@@ -11,62 +11,55 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  
-  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/jquery.validation/1.15.1/jquery.validate.min.js"></script>
-<link rel="stylesheet" href="css/updateForm.css">
 <title>Insert title here</title>
+<link rel="stylesheet" href="css/updateForm.css">
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="js/profileValidation.js"></script>
+  
+  
+
 </head>
 <body>
- <script src="js/profileValidation.js"></script>
+  
    <jsp:include page="profile.html" /> 
    <h2>Profile</h2>
-   <table id="updateForm">
-   <form class="form-signin" name="updateForm1" action="updateProfile" method="post">   
-   <tr>    
-       <div class="form-group">
-      <td>UserName :</td><td><input type="text"  name="name" id="name" value="${sessionScope.loginUser.name}"/></td>
-       </div>
-    </tr>  
-    <tr>
-       <div class="form-group">
-      <td>PassWord :</td><td><input type="password" name="pass" id="pass" value="${sessionScope.loginUser.pass}"></td>
-       </div> 
-    </tr>   
-    
-    <tr>
-        <div class="form-group">
-      <td>Email :</td><td><input type="email" name="email" value="${sessionScope.loginUser.email}"></td>
-       </div> 
-    </tr> 
-    <tr>
-        <div class="form-group">
-      <td>Gender :${sessionScope.loginUser.gender}</td>
-      </tr>
-      <tr>
-      <td><input type="radio" name="gender" value="Male"> Male</td>
-      <td>
-      <input type="radio" name="gender" value="Female" > Female</td>
-       </div> 
-    </tr> 
-    
-    <tr>
-        <div class="form-group">
-      <td>BirthDate :</td><td><input type="date" name="birthDate" value="${sessionScope.loginUser.date}"></td>
-       </div> 
-    </tr> 
-    <tr>
-        <div class="form-group">
-      <td>Mobile :</td><td><input type="text" name="mobileNumber" value="${sessionScope.loginUser.mobileNumber}"></td>
-       </div> 
-    </tr> 
-         
    
-      </table>
+   
+   <form class="form-signin" id="updateForm2" name="updateForm2" action="updateProfile" method="post">   
+      
+       <div class="form-group">
+     UserName :<input type="text"  name="name" id="name" value="${sessionScope.loginUser.name}"/>
+       </div>
+   
+       <div class="form-group">
+      PassWord :<input type="password" name="pass" id="pass" value="${sessionScope.loginUser.pass}">
+       </div> 
+   
+        <div class="form-group">
+     Email :<input type="email" name="email" value="${sessionScope.loginUser.email}">
+       </div> 
+    
+        <div class="form-group">
+      Gender :${sessionScope.loginUser.gender}
+      <div>
+    Male  <input type="radio" name="gender" value="Male">
+    Female <input type="radio" name="gender" value="Female" >
+      </div>
+       </div> 
+    
+        <div class="form-group">
+     BirthDate :<input type="date" name="birthDate" value="${sessionScope.loginUser.date}">
+       </div> 
+   
+        <div class="form-group">
+     Mobile :<input type="text" id="mobileNumber" name="mobileNumber" value="${sessionScope.loginUser.mobileNumber}">
+       </div> 
+  
        <button class="btn btn-primary" type="submit" >Update</button>  
      </form>
-   
-</body>
+     <script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/jquery.validate.min.js"></script>
+<script src="https://cdn.jsdelivr.net/jquery.validation/1.16.0/additional-methods.min.js"></script>
+  </body>
 </html>

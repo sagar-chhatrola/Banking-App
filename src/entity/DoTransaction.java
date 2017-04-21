@@ -1,6 +1,7 @@
 package entity;
 
 import java.io.IOException;
+import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -18,6 +19,7 @@ import service.CustomerServiceImpl;
 public class DoTransaction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	CustomerServiceImpl cs = new CustomerServiceImpl();
+	private static final Logger _log=Logger.getLogger(DoTransaction.class.getName());
     /**
      * @see HttpServlet#HttpServlet()
      */
@@ -64,7 +66,8 @@ public class DoTransaction extends HttpServlet {
 
 				}
 			} else {
-				request.setAttribute("errorMessage", "Please Enter valid details !!");
+				_log.info("in else statement of dotransaction");
+				request.setAttribute("validation", "Please Enter valid details !!");
 				request.getRequestDispatcher("transaction.jsp").forward(request, response);
 			}
 		} else {

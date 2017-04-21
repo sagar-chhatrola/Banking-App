@@ -1,10 +1,11 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
+
 import pojo.Transaction;
 import utility.Database;
 
@@ -13,11 +14,13 @@ public class TransactionDaoImpl implements TransactionDao{
 	public  ArrayList<pojo.Transaction> listOfTransaction(int accountNumber) throws SQLException {
 		ArrayList<pojo.Transaction> al = new ArrayList<pojo.Transaction>();
 		 con = Database.getInstance().getConnection();
-		Statement st = con.createStatement();
-
-		String query = "select * from bank.transcation where credited_acc in('" + accountNumber + "')";
+		 String query = "select * from bank.transcation where credited_acc in(?)";
+		 
+		PreparedStatement pst = con.prepareStatement(query);
+        pst.setInt(1, accountNumber);
+		
 		Transaction t;
-		ResultSet rs = st.executeQuery(query);
+		ResultSet rs = pst.executeQuery();
 		while (rs.next()) {
 			t = new Transaction();
 			t.setTransactionId(rs.getInt("t_id"));
@@ -27,9 +30,10 @@ public class TransactionDaoImpl implements TransactionDao{
 			t.setDatetime(rs.getString("datetime"));
 			al.add(t);
 		}
-		String query1 = "select * from bank.transcation where debited_acc in('" + accountNumber + "')";
-
-		ResultSet rs1 = st.executeQuery(query1);
+		String query1 = "select * from bank.transcation where debited_acc in(?)";
+        pst=con.prepareStatement(query1);
+        pst.setInt(1, accountNumber);
+		ResultSet rs1 = pst.executeQuery();
 		while (rs1.next()) {
 			t = new Transaction();
 			t.setTransactionId(rs1.getInt("t_id"));

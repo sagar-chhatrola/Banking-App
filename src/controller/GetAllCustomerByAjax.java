@@ -61,7 +61,7 @@ public class GetAllCustomerByAjax extends HttpServlet {
 			
 			e.printStackTrace();
 		}
-		
+		 session.setAttribute("customerType", request.getParameter("customerType"));
 		 session.setAttribute("allCustomer", allCustomerList);
 		 response.sendRedirect("admin.jsp");
 		 

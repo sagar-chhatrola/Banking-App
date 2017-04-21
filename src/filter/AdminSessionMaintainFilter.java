@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 /**
  * Servlet Filter implementation class AdminSessionMaintainFilter
  */
-@WebFilter(urlPatterns={}
+@WebFilter(urlPatterns={"/admin.jsp"}
 
 		  )
 public class AdminSessionMaintainFilter implements Filter {

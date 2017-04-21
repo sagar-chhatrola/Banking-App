@@ -18,7 +18,7 @@
 <div class="container">
  <center> <h2>Please register</h2></center>
   
-  <form class="form-signin" action="CreateMultiple">
+  <form class="form-signin" action="CreateMultiple" method="post">
     <div class="form-group">
       <label for="usr">Name:</label>
       <input type="text" class="form-control" id="usr" name="name">

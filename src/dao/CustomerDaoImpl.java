@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Properties;
+import java.util.logging.Logger;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -23,6 +24,7 @@ import pojo.Customer;
 import utility.Database;
 
 public class CustomerDaoImpl implements CustomerDao {
+	private static final Logger _log=Logger.getLogger(CustomerDaoImpl.class.getName());
 	String name = "";
 	String email = "";
 	String password = "";
@@ -46,18 +48,8 @@ public class CustomerDaoImpl implements CustomerDao {
 		st.setBoolean(7, false);
 		int status = st.executeUpdate();
 		System.out.println(status);
-		int customerId = 0;
-		if (status > 0) {
-			ResultSet rs = st.getGeneratedKeys();
-			while (rs.next()) {
-				customerId = rs.getInt(1);
-			}
-			String str = "insert into bank.account (cust_id,balance)values(?,?)";
-			st = con.prepareStatement(str);
-			st.setInt(1, customerId);
-			st.setInt(2, 1000);
-			st.executeUpdate();
-		}
+		
+		
 		return status;
 	}
 
@@ -280,10 +272,18 @@ public class CustomerDaoImpl implements CustomerDao {
 	@Override
 	public void customerApprove(int customerId, boolean approve) throws SQLException {
 		con = Database.getInstance().getConnection();
-
+		PreparedStatement pst;
+        if(approve==true)
+        {
+        	_log.info("inside customerApprove method");
+        	_log.info(""+approve);
+        	
 		String query = "update bank.cust_details set approve=? where cust_id=?";
 		String query1 = "select email,name,password from bank.cust_details where cust_id=?";
-		PreparedStatement pst = con.prepareStatement(query);
+		 pst = con.prepareStatement(query);
+		 pst.setBoolean(1, true);
+			pst.setInt(2, customerId);
+			pst.executeUpdate();
 		PreparedStatement pst1 = con.prepareStatement(query1);
 		pst1.setInt(1, customerId);
 		ResultSet rs = pst1.executeQuery();
@@ -292,38 +292,6 @@ public class CustomerDaoImpl implements CustomerDao {
 			password = rs.getString("password");
 			email = rs.getString("email");
 		}
-		if (approve == true) {
-			props.put("mail.smtp.host", "smtp.gmail.com");
-			props.put("mail.smtp.socketFactory.port", "465");
-			props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
-			props.put("mail.smtp.auth", "true");
-			props.put("mail.smtp.port", "465");
-			props.put("mail.smtp.socketFactory.fallback", "false");
-			props.put("mail.smtp.starttls.enable", "true");
-			Session session = Session.getInstance(props, new javax.mail.Authenticator() {
-				@Override
-				protected PasswordAuthentication getPasswordAuthentication() {
-					return new PasswordAuthentication("sagar@aimdek.com", "sagar@12345");
-				}
-			});
-
-			try {
-
-				Message message = new MimeMessage(session);
-				message.setFrom(new InternetAddress("sagar@aimdek.com"));
-				message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(email));
-				message.setSubject("Account Approval");
-				message.setText("Hello " + name + "\nYour MyBank account is Deactivated now for security reasons.");
-				Transport.send(message);
-				System.out.println("Done");
-
-			} catch (MessagingException e) {
-				throw new RuntimeException(e);
-			}
-			pst.setBoolean(1, false);
-			
-
-		} else {
 			props.put("mail.smtp.host", "smtp.gmail.com");
 			props.put("mail.smtp.socketFactory.port", "465");
 			props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
@@ -349,15 +317,26 @@ public class CustomerDaoImpl implements CustomerDao {
 						+ name + "\nPassword:" + password);
 				Transport.send(message);
 				System.out.println("Done");
+				String sql = "insert into bank.account (cust_id,balance)values(?,?)";
+				pst=con.prepareStatement(sql);
+				pst.setInt(1, customerId);
+				pst.setInt(2, 1000);
+				pst.executeUpdate();
 
 			} catch (MessagingException e) {
 				throw new RuntimeException(e);
 			}
-			pst.setBoolean(1, true);
-		}
-		pst.setInt(2, customerId);
-		pst.executeUpdate();
-
+			
+	   
+        }
+        else
+        { 
+        	String query="delete from bank.cust_details where cust_id=?";
+        	
+        	pst=con.prepareStatement(query);
+        	pst.setInt(1, customerId);
+        	pst.execute();
+        }
 	}
 
 }

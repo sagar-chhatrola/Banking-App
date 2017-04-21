@@ -2,6 +2,7 @@ package controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import javax.servlet.ServletException;
@@ -9,45 +10,46 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
-import service.CustomerService;
-import service.CustomerServiceImpl;
+import service.AccountService;
+import service.AccountServiceImpl;
 
 /**
- * Servlet implementation class CustomerApprove
+ * Servlet implementation class GetAccountNumberDropDown
  */
-@WebServlet("/CustomerApprove")
-public class CustomerApprove extends HttpServlet {
+@WebServlet("/GetAccountNumberDropDown")
+public class GetAccountNumberDropDown extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	CustomerService customerService=new CustomerServiceImpl();
-	private static final Logger _log=Logger.getLogger(CustomerApprove.class.getName());
+	
+	 AccountService accountService=new AccountServiceImpl();
+  public static final Logger _log=Logger.getLogger(GetAccountNumberDropDown.class.getName(), null);
+       
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public CustomerApprove() {
+    public GetAccountNumberDropDown() {
         super();
-       
+        
     }
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		int customerId=Integer.parseInt(request.getParameter("customerId"));
-		boolean approve=Boolean.parseBoolean(request.getParameter("approve"));
-		
-		System.out.println(customerId+"  "+approve);
+		int accountNumber=Integer.parseInt(request.getParameter("accountNumber"));
+		HttpSession session=request.getSession(false);
+		_log.info("inside dropdown"+accountNumber);
 		try {
-			customerService.customerApprove(customerId, approve);
+			ArrayList<Integer> allAccountNumberList=accountService.getAccountNumberDropDown(accountNumber);
+			session.setAttribute("allAccountNumberList", allAccountNumberList);
+		System.out.println(allAccountNumberList);
+			response.sendRedirect("accountNumberDropDownList.jsp");
+			
 		} catch (SQLException e) {
 			
 			e.printStackTrace();
 		}
-		_log.info(request.getParameter("customerType"));
-		request.setAttribute("customerType", request.getParameter("customerType"));
-		request.getRequestDispatcher("GetAllCustomerByAjax").forward(request, response);
-		
 	}
 
 	/**

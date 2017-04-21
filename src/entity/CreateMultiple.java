@@ -39,22 +39,22 @@ public class CreateMultiple extends HttpServlet {
 		if (session.getAttribute("customer") != null) {
 			String name = request.getParameter("name");
 			String pass = request.getParameter("pass");
-			Customer c = (Customer) session.getAttribute("customer");
-			int id = c.getId();
+			Customer customer = (Customer) session.getAttribute("customer");
+			int id = customer.getId();
 			System.out.println(id);
 			try {
 				
 				int status = accountService.createMultiple(name, pass, id);
 				if (status == 1) {
-					request.setAttribute("errorMessage", "Successfully Another Account Created.");
-					request.getRequestDispatcher("account.jsp").include(request, response);
+					session.setAttribute("errorMessage", "Successfully Another Account Created.");
+					response.sendRedirect("GetAccountInfo");
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		} else {
-			request.setAttribute("errorMessage", "Please Login First.");
-			request.getRequestDispatcher("login.jsp").forward(request, response);
+			session.setAttribute("errorMessage", "Please Login First.");
+			response.sendRedirect("login.jsp");
 		}
 	}
 

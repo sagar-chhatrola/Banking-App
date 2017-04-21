@@ -50,6 +50,9 @@ $(function() {
       },
       gender:{
     	  required:true
+      },
+      birthDate:{
+    	  required:true
       }
       
     },

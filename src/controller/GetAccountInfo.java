@@ -49,7 +49,7 @@ public class GetAccountInfo extends HttpServlet {
 					
 					e.printStackTrace();
 				}
-				//request.setAttribute("successTransfer", "Successfully Transfered");
+				session.setAttribute("successTransfer", "");
 				session.setAttribute("accountInfoList", accountInfoList);
 				response.sendRedirect("account.jsp");
 				

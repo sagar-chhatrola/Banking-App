@@ -33,13 +33,9 @@
                     </option>
                  </c:forEach>
                </select>
-       
-        <br/>
       </div>
 <div class="wrapper" id="history">
-    
-       
-     
+
        <table class="table">
 		<thead>
         <tr>

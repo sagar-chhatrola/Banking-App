@@ -29,9 +29,9 @@
 <center><h1>Customer List</h1></center>
 <div>
 Choose Type: <select name="customerType" id="customerType">
-                 <option value="1">All</option>
-                  <option value="2">Approved</option>
-                  <option value="3">Non-Approved</option>
+                 <option value="1" ${customerType eq "1"?'selected':''}>All</option>
+                  <option value="2" ${customerType eq "2"?'selected':''}>Approved</option>
+                  <option value="3" ${customerType eq "3"?'selected':''}>Non-Approved</option>
                </select>
 </div>
 
@@ -62,14 +62,16 @@ Choose Type: <select name="customerType" id="customerType">
            <td>${list.gender}</td>
            <td>${list.mobileNumber}</td>
            <td>${list.date}</td>
-          <td><a href="CustomerApprove?customerId=${list.id}&approve=${list.approve}&customerType=1" class="btn btn-primary"><c:choose >
+          <td>
+           <c:choose>
              <c:when test="${list.approve==false}">
-             Disapprove
+              <a class="btn btn-primary" href="CustomerApprove?customerId=${list.id}&approve=true&customerType=<script>document.getElementById("customerType").value</script> Approve</a>
+              <a class="btn btn-primary" href="CustomerApprove?customerId=${list.id}&approve=false&customerType=<script>document.getElementById("customerType").value</script> DisApprove</a>
              </c:when>
              <c:otherwise>
              Approved
              </c:otherwise>
-</c:choose></a></td>
+           </c:choose></td>
            <td>
         <a class="btn btn-info" onclick="javascript:onClick(this)" data-toggle="collapse"  data-value="${list.id}" href="#${list.id}">
         Show Accounts</a>
@@ -83,7 +85,8 @@ Choose Type: <select name="customerType" id="customerType">
 			</c:forEach>
         
          </tbody>
-			</table> 
+			</table>
+			 
 		<script type="text/javascript">
             $('#customerType').change (
             function() {
