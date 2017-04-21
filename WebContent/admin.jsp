@@ -65,23 +65,20 @@ Choose Type: <select name="customerType" id="customerType">
           <td>
            <c:choose>
              <c:when test="${list.approve==false}">
-              <a class="btn btn-primary" href="CustomerApprove?customerId=${list.id}&approve=true&customerType=<script>document.getElementById("customerType").value</script> Approve</a>
-              <a class="btn btn-primary" href="CustomerApprove?customerId=${list.id}&approve=false&customerType=<script>document.getElementById("customerType").value</script> DisApprove</a>
+              <a class="btn btn-primary" href="CustomerApprove?customerId=${list.id}&approve=true&customerType=<script>"document.getElementById("customerType").value"</script> Approve</a>
+              <a class="btn btn-primary" href="CustomerApprove?customerId=${list.id}&approve=false&customerType=<script>"document.getElementById("customerType").value"</script> DisApprove</a>
              </c:when>
              <c:otherwise>
              Approved
              </c:otherwise>
-           </c:choose></td>
-           <td>
+           </c:choose>
+           </td>
+        <td>
         <a class="btn btn-info" onclick="javascript:onClick(this)" data-toggle="collapse"  data-value="${list.id}" href="#${list.id}">
         Show Accounts</a>
-        
-         <div id="${list.id}">
-           
-         
-         </div>
-   </td>
+       </td>
           </tr>
+          <tr id="${list.id}"> </tr>
 			</c:forEach>
         
          </tbody>
