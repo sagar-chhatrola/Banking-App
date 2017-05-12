@@ -19,7 +19,7 @@
     </div>
     <ul class="nav navbar-nav">
       <li><a href="GetAllCustomer">Home</a></li>
-      <li><a href="#">Account</a></li>
+      <li><a href="GetPendingAccounts">Account</a></li>
       <li style="float:right" ><a href="LogOut.jsp" >LogOut</a></li>
     </ul>
   </div>
@@ -29,15 +29,13 @@
 <center><h1>Customer List</h1></center>
 <div>
 Choose Type: <select name="customerType" id="customerType">
-                 <option value="1" ${customerType eq "1"?'selected':''}>All</option>
-                  <option value="2" ${customerType eq "2"?'selected':''}>Approved</option>
-                  <option value="3" ${customerType eq "3"?'selected':''}>Non-Approved</option>
+                 <option value="All" ${param.customerType eq "1"?'selected':''}>All</option>
+                  <option value="Approved" ${param.customerType eq "2"?'selected':''}>Approved</option>
+                  <option value="Non-Approved" ${param.customerType eq "3"?'selected':''}>Non-Approved</option>
                </select>
 </div>
 
  <div id="customerList">
- 
- <data>
  <table class="table">
 		<thead>
         <tr>
@@ -65,8 +63,8 @@ Choose Type: <select name="customerType" id="customerType">
           <td>
            <c:choose>
              <c:when test="${list.approve==false}">
-              <a class="btn btn-primary" href="CustomerApprove?customerId=${list.id}&approve=true&customerType=<script>"document.getElementById("customerType").value"</script> Approve</a>
-              <a class="btn btn-primary" href="CustomerApprove?customerId=${list.id}&approve=false&customerType=<script>"document.getElementById("customerType").value"</script> DisApprove</a>
+              <a class="btn btn-primary" onclick="javascript:onApprove(this)" data-id="${list.id}" data-approve="true"> Approve</a>
+              <a class="btn btn-primary" onclick="javascript:onApprove(this)" data-id="${list.id}" data-approve="false">  DisApprove</a>
              </c:when>
              <c:otherwise>
              Approved
@@ -80,9 +78,10 @@ Choose Type: <select name="customerType" id="customerType">
           </tr>
           <tr id="${list.id}"> </tr>
 			</c:forEach>
-        
-         </tbody>
 			</table>
+ 
+</div>
+ 
 			 
 		<script type="text/javascript">
             $('#customerType').change (
@@ -93,15 +92,25 @@ Choose Type: <select name="customerType" id="customerType">
                     url: "GetAllCustomerByAjax",
                     data: {customerType: document.getElementById("customerType").value},
                     success: function(data){               
-            	        $("#customerList").html($(data).find("data").html());
+            	        $("#customerList").html(data);
             	    }
                 });
             }
-        );
-            
-      
-            
-            function onClick(item) {
+        );     
+        function onApprove(item) {
+        	        
+                	var id = item.getAttribute("data-id");
+                	var approve=item.getAttribute("data-approve");
+                    $.get("CustomerApprove", {
+                    	customerId:id,
+                    	approve:approve,
+                    	customerType:document.getElementById("customerType").value
+                   }, function(responseText) {
+                       $("#customerList").html(responseText);
+                    });
+                };
+                
+                function onClick(item) {
                 	var value = item.getAttribute("data-value");
                     $.get("GetAccountInfoList", {
                     	customerId:value
@@ -109,15 +118,10 @@ Choose Type: <select name="customerType" id="customerType">
                        $("#"+value).html(responseText);
                     });
                 };
-           
-            
-            
-            
         </script>
         
          
 			
-</data>
-</div>
+
 </body>
 </html>

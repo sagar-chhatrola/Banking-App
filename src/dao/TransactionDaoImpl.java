@@ -24,7 +24,7 @@ public class TransactionDaoImpl implements TransactionDao{
 		while (rs.next()) {
 			t = new Transaction();
 			t.setTransactionId(rs.getInt("t_id"));
-			t.setAmount(rs.getInt("amount"));
+			t.setAmount(rs.getDouble("amount"));
 			t.setCreditedAccount(rs.getInt("credited_acc"));
 			t.setDebitedAccount(rs.getInt("debited_acc"));
 			t.setDatetime(rs.getString("datetime"));
@@ -37,7 +37,7 @@ public class TransactionDaoImpl implements TransactionDao{
 		while (rs1.next()) {
 			t = new Transaction();
 			t.setTransactionId(rs1.getInt("t_id"));
-			t.setAmount(rs1.getInt("amount"));
+			t.setAmount(rs1.getDouble("amount"));
 			t.setCreditedAccount(rs1.getInt("credited_acc"));
 			t.setDebitedAccount(rs1.getInt("debited_acc"));
 			t.setDatetime(rs1.getString("datetime"));

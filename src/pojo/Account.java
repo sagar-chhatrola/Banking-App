@@ -2,8 +2,17 @@ package pojo;
 
 public class Account {
 	public int accountNumber;
-	public long balance;
+	public double balance;
 	public boolean approve;
+	public int customerId;
+
+	public int getCustomerId() {
+		return customerId;
+	}
+
+	public void setCustomerId(int customerId) {
+		this.customerId = customerId;
+	}
 
 	public boolean isApprove() {
 		return approve;
@@ -21,11 +30,11 @@ public class Account {
 		this.accountNumber = accountNumber;
 	}
 
-	public long getBalance() {
+	public double getBalance() {
 		return balance;
 	}
 
-	public void setBalance(long balance) {
+	public void setBalance(float balance) {
 		this.balance = balance;
 	}
 }

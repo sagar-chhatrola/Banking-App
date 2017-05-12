@@ -44,9 +44,9 @@ public class SessionMaintainFilter implements Filter {
           HttpServletResponse httpResponse=(HttpServletResponse)response;
           HttpSession session=httpRequest.getSession(false);
           System.out.println(session);
-          //Customer customer=(Customer) session.getAttribute("customer");
+          Customer customer=(Customer) session.getAttribute("customer");
           
-          if((Customer)session.getAttribute("customer")==null)
+          if(customer==null)
           {
         	  session.setAttribute("errorMessage", "Please login first");
         	 httpResponse.sendRedirect("login.jsp");

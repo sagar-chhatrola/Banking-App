@@ -57,7 +57,7 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public int transferAmmount(Integer ammount, Integer acc_no, Integer account_transfer, int id) throws SQLException {
+	public int transferAmmount(double ammount, int acc_no, int account_transfer, int id) throws SQLException {
 	
 		return customerDao.transferAmmount(ammount, acc_no, account_transfer, id);
 	}

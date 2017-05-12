@@ -42,7 +42,7 @@ public class DoTransaction extends HttpServlet {
 					&& Validate.checkNumber((request.getParameter("ammount")))
 					&& Validate.checkNumber((request.getParameter("anotherAccountNumber")))) {
 				int accountNumber = Integer.parseInt(request.getParameter("accountNumber"));
-				int ammount = Integer.parseInt(request.getParameter("ammount"));
+				double ammount = Double.parseDouble(request.getParameter("ammount"));
 				int accountNumberTransfer = Integer.parseInt(request.getParameter("anotherAccountNumber"));
 
 				try {

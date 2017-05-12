@@ -14,7 +14,7 @@ public interface CustomerDao {
 	public  int chechUserName(String userName) throws SQLException;
 	public  Customer getUserProfile(int customerId) throws SQLException;
 	public  int updateProfile(String userName,String email,String password,String gender,Long mobileNumber,Date birthDate,int customerId) throws SQLException;
-	public int transferAmmount(Integer ammount, Integer acc_no, Integer account_transfer, int id) throws SQLException;
+	public int transferAmmount(double ammount, int acc_no, int account_transfer, int id) throws SQLException;
 	public String checkUser(String name,String password) throws SQLException;
 	public ArrayList<Customer> getAllCustomer() throws SQLException;
 	public ArrayList<Customer> getCustomerByType(boolean customerType) throws SQLException;

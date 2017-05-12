@@ -41,19 +41,19 @@ public class GetAllCustomerByAjax extends HttpServlet {
 		HttpSession session=request.getSession(false);
 		 allCustomerList=new ArrayList<Customer>();
 		 try {
-			if(customerType.equals("1"))
+			if(customerType.equals("All"))
 		 {
 				
 			 allCustomerList=customerService.getAllCustomer();
 			 System.out.println("All");
 		 }
-		 else if(customerType.equals("2"))
+		 else if(customerType.equals("Approved"))
 		 {
 			 allCustomerList=customerService.getCustomerByType(true);
 			 System.out.println("Approved");
 			 
 		 }
-		 else if(customerType.equals("3")){
+		 else if(customerType.equals("Non-Approved")){
 			 allCustomerList=customerService.getCustomerByType(false);
 			 System.out.println("Non-Approved");
 		 }
@@ -63,7 +63,7 @@ public class GetAllCustomerByAjax extends HttpServlet {
 		}
 		 session.setAttribute("customerType", request.getParameter("customerType"));
 		 session.setAttribute("allCustomer", allCustomerList);
-		 response.sendRedirect("admin.jsp");
+		 response.sendRedirect("allCustomerByajax.jsp");
 		 
 	}
 

@@ -2,7 +2,7 @@ package pojo;
 
 public class Transaction {
 	int transactionId;
-	int amount;
+	double amount;
 	int creditedAccount;
 	int debitedAccount;
 	String datetime;
@@ -12,11 +12,11 @@ public class Transaction {
 	public void setTransactionId(int transactionId) {
 		this.transactionId = transactionId;
 	}
-	public int getAmount() {
+	public double getAmount() {
 		return amount;
 	}
-	public void setAmount(int amount) {
-		this.amount = amount;
+	public void setAmount(double d) {
+		this.amount = d;
 	}
 	public int getCreditedAccount() {
 		return creditedAccount;

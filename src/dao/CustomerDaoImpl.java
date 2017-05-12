@@ -6,9 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.SimpleDateFormat;
+import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Properties;
 import java.util.logging.Logger;
 
@@ -153,7 +152,7 @@ public class CustomerDaoImpl implements CustomerDao {
 		return status;
 	}
 
-	public int transferAmmount(Integer ammount, Integer acc_no, Integer account_transfer, int id) throws SQLException {
+	public int transferAmmount(double ammount, int acc_no, int account_transfer, int id) throws SQLException {
 
 		con = Database.getInstance().getConnection();
 		PreparedStatement pst ;
@@ -168,7 +167,7 @@ public class CustomerDaoImpl implements CustomerDao {
 			ResultSet rs = pst.executeQuery();
 
 			while (rs.next()) {
-				if (rs.getInt(3) >= ammount && ammount != null) {
+				if (rs.getInt(3) >= ammount) {
 					Integer balance1 = rs.getInt(3);
 					System.out.println(balance1);
 					
@@ -176,7 +175,7 @@ public class CustomerDaoImpl implements CustomerDao {
 					String credit = "update bank.account set balance=?-? where acc_no=?";
 					PreparedStatement pst1 = con.prepareStatement(credit);
 					pst1.setInt(1, balance1);
-					pst1.setInt(2, ammount);
+					pst1.setDouble(2, ammount);
 					pst1.setInt(3, acc_no);
 					pst1.executeUpdate();
 					System.out.println(credit);
@@ -193,15 +192,15 @@ public class CustomerDaoImpl implements CustomerDao {
 							+ account_transfer + "'";
 					st1.executeUpdate(debit);
 					n = 1;
-					String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
+					//String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
 
 					 
 					   String history_query = "insert into bank.transcation (amount,credited_acc,debited_acc,datetime) values(?,?,?,?)";
 			                    pst1=con.prepareStatement(history_query);
-			                   pst1.setInt(1,ammount);
+			                   pst1.setDouble(1,ammount);
 			                   pst1.setInt(2,acc_no);
 			                   pst1.setInt(3,account_transfer);
-			                   pst1.setString(4, timeStamp);
+			                   pst1.setTimestamp(4, new Timestamp(System.currentTimeMillis()));
 			                   
 								pst1.execute();// return 1;
 				} else {
@@ -317,10 +316,11 @@ public class CustomerDaoImpl implements CustomerDao {
 						+ name + "\nPassword:" + password);
 				Transport.send(message);
 				System.out.println("Done");
-				String sql = "insert into bank.account (cust_id,balance)values(?,?)";
+				String sql = "insert into bank.account (cust_id,balance,approve)values(?,?,?)";
 				pst=con.prepareStatement(sql);
 				pst.setInt(1, customerId);
 				pst.setInt(2, 1000);
+				pst.setBoolean(3, true);
 				pst.executeUpdate();
 
 			} catch (MessagingException e) {
