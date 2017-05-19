@@ -28,7 +28,7 @@
         
  Account Number: <select name="accountNumber" id="accountNumber">
                  <c:forEach items="${accountNumberList}"  var="list">
-                    <option value="${list}" ${param.accountNumber eq '${list}' ? 'selected': ''} >
+                    <option value="${list}" ${param.accountNumber eq '${accountNumber}' ? 'selected': ''} >
                        ${list}
                     </option>
                  </c:forEach>
@@ -39,11 +39,10 @@
        <table class="table">
 		<thead>
         <tr>
-            <th>Ammount</th>
-            <th>Credite_acc</th>
-            <th>Debited_acc</th>
+            <th>Amount</th>
             <th>Transaction_id</th>
             <th>Date_time</th>
+            <th>Summary</th>
             
         </tr>
         </thead>
@@ -51,11 +50,9 @@
        <c:forEach items="${transactionList}"  var="list">
            <tr>
            <td>${list.amount}</td>
-           <td>${list.creditedAccount}</td>
-           <td>${list.debitedAccount}</td>
            <td>${list.transactionId}</td>
            <td>${list.datetime}</td>
-           
+           <td>Transfer amount from Account(${list.debitedAccount}) to Account(${list.creditedAccount})</td>
            </tr>
          </c:forEach>
          </tbody>

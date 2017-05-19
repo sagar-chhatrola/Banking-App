@@ -16,6 +16,7 @@ import service.CustomerServiceImpl;
 
 /**
  * Servlet implementation class getUserProfileServlet
+ * this servlet is used for get customer profile data.
  */
 @WebServlet("/getUserProfileServlet")
 public class GetUserProfileServlet extends HttpServlet {
@@ -31,6 +32,8 @@ public class GetUserProfileServlet extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @param customerId this is int variable for store customer's  id
+	 * @param loginUser this is a Customer class variable that is used to store customer's profile data.
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session=request.getSession(false);

@@ -27,8 +27,10 @@
       <label for="pwd">Password:</label>
       <input type="password" class="form-control" id="pwd" name="pass">
       <br/>
+       <p style="color:red;">${invalid}</p>
         <button class="btn btn-md btn-primary" type="submit">Register</button>
     </div>
+   
   </form>
     </div>
   </div>

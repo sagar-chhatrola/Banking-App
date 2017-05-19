@@ -14,11 +14,12 @@ import service.CustomerServiceImpl;
 
 /**
  * Servlet implementation class DoTransaction
+ * This servlet is used for transfer ammount from one account to another
  */
 
 public class DoTransaction extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	CustomerServiceImpl cs = new CustomerServiceImpl();
+	CustomerServiceImpl customerService = new CustomerServiceImpl();
 	private static final Logger _log=Logger.getLogger(DoTransaction.class.getName());
     /**
      * @see HttpServlet#HttpServlet()
@@ -30,6 +31,15 @@ public class DoTransaction extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @param fromAccountNumber this is int variable,
+	 *        which is used for store account number that is transfer money from which account.
+	 * @param toAccountNumber this is int variable,
+	 *        which is used for store account number that is transfer money to which account.
+	 * @param ammount this is double variable,
+	 *        which is used for how many ruppes transfer from one account to another account
+	 * @param id this is int variable,which is used for store customer's id.
+	 * @param customer this is Customer class object,
+	 *        which is used for get current login customer's id.
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -37,25 +47,21 @@ public class DoTransaction extends HttpServlet {
 		HttpSession session = request.getSession(false);
 		if (session.getAttribute("customer") != null) {
 			
-			if (request.getParameter("anotherAccountNumber") != "" && request.getParameter("accountNumber") != ""
-					&& request.getParameter("ammount") != "" && Validate.checkNumber((request.getParameter("accountNumber")))
-					&& Validate.checkNumber((request.getParameter("ammount")))
-					&& Validate.checkNumber((request.getParameter("anotherAccountNumber")))) {
-				int accountNumber = Integer.parseInt(request.getParameter("accountNumber"));
+			
+				int fromAccountNumber = Integer.parseInt(request.getParameter("accountNumber"));
 				double ammount = Double.parseDouble(request.getParameter("ammount"));
-				int accountNumberTransfer = Integer.parseInt(request.getParameter("anotherAccountNumber"));
+				int toAccountNumber = Integer.parseInt(request.getParameter("anotherAccountNumber"));
 
 				try {
 					Customer customer = (Customer) session.getAttribute("customer");
 					int id = customer.getId();
-					
-					int status = cs.transferAmmount(ammount, accountNumber, accountNumberTransfer, id);
+					int status = customerService.transferAmmount(ammount, fromAccountNumber, toAccountNumber,id);
 					if (status > 0) {
 						session.setAttribute("successTransfer", "Successfully Transfered!!");
 						response.sendRedirect("GetAccountInfo");
 					} else {
-						request.setAttribute("errorMassage",
-								"Enter Valad ammount,or not sufficent ammount!!");
+						request.setAttribute("errmsg",
+								"Enter Valid ammount");
 						request.getRequestDispatcher("transaction.jsp").forward(request, response);
 					}
 
@@ -65,11 +71,7 @@ public class DoTransaction extends HttpServlet {
 					e.printStackTrace();
 
 				}
-			} else {
-				_log.info("in else statement of dotransaction");
-				request.setAttribute("validation", "Please Enter valid details !!");
-				request.getRequestDispatcher("transaction.jsp").forward(request, response);
-			}
+			
 		} else {
 			request.setAttribute("errorMessage", "Please login first !!");
 

@@ -43,7 +43,6 @@ public class SessionMaintainFilter implements Filter {
           HttpServletRequest httpRequest=(HttpServletRequest)request;
           HttpServletResponse httpResponse=(HttpServletResponse)response;
           HttpSession session=httpRequest.getSession(false);
-          System.out.println(session);
           Customer customer=(Customer) session.getAttribute("customer");
           
           if(customer==null)

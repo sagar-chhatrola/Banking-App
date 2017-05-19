@@ -17,6 +17,7 @@ import service.AccountServiceImpl;
 
 /**
  * Servlet implementation class GetAccountNumberDropDown
+ * This servlet is used for display accountNumber on trsansfer page based on selected account number
  */
 @WebServlet("/GetAccountNumberDropDown")
 public class GetAccountNumberDropDown extends HttpServlet {
@@ -35,6 +36,8 @@ public class GetAccountNumberDropDown extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @param accountNumber this is int variable which is used to store account number of bank
+	 * @param allAccountNumberList this is ArrayList variable which is used to store account Number
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int accountNumber=Integer.parseInt(request.getParameter("accountNumber"));

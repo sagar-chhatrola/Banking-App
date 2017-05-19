@@ -17,6 +17,7 @@ import service.AccountServiceImpl;
 
 /**
  * Servlet implementation class getAccountNumberList
+ * This servlet is used to get account number of particular customer 
  */
 @WebServlet("/getAccountNumberList")
 public class GetAccountNumberList extends HttpServlet {
@@ -32,6 +33,9 @@ public class GetAccountNumberList extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @param customerId this is int variable  which is used to store customer's id.
+	 * @param accountNumberList this is ArrayList variable 
+	 *         which is used to store account number of particular customer
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session=request.getSession(false);

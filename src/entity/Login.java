@@ -17,6 +17,7 @@ import service.CustomerServiceImpl;
 
 /**
  * Servlet implementation class Login
+ * This servlet is used for login into bank account.
  */
 // @WebServlet("/Login")
 public class Login extends HttpServlet {
@@ -34,17 +35,27 @@ public class Login extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
+	 * @param userName this is String variable which is used for store customer' username.
+	 * @param password this is String variable which is used for store customer' password.
+	 * @param isAdmin this is int variable,
+	 *        which is used for check login user is admin or customer.
+	 * @param loginUser this is Customer Class variable,
+	 *        which is used for store customer profile of current login customer.
+	 *        
+	 * @param status this is int variable which is used for in sign in process.
+	 *        if status==1 then successfully sign in.
+	 *          otherwise exception.
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
         
 		response.setContentType("text/html");
-		String name = request.getParameter("name");
+		String userName = request.getParameter("name");
 		String password = request.getParameter("pass");
 	
 		int isAdmin = 0;
 		try {
-			isAdmin = adminService.isAdmin(name);
+			isAdmin = adminService.isAdmin(userName);
 		} catch (SQLException e1) {
 			
 			e1.printStackTrace();
@@ -53,14 +64,14 @@ public class Login extends HttpServlet {
 		int status=0;
 		if(isAdmin==1){
 		 try {
-			status=adminService.adminLogin(name, password);
+			status=adminService.adminLogin(userName, password);
 		} catch (SQLException e) {
 			
 			e.printStackTrace();
 		}
 		if (status == 1) {
 			HttpSession session = request.getSession();
-			session.setAttribute("adminName",name);
+			session.setAttribute("adminName",userName);
 			
 			response.sendRedirect("GetAllCustomer");
 		} else {
@@ -72,14 +83,13 @@ public class Login extends HttpServlet {
 	    }
 		else{
 			try {
-			 status = customerService.signIn(name, password);
-			System.out.println("hii"+status);
+			 status = customerService.signIn(userName, password);
 				if (status == 1) {
 					Customer customer = new Customer();
-					customer.setName(name);
+					customer.setName(userName);
 					customer.setPass(password);
 
-					int customerId = customerService.getCustomerId(name);
+					int customerId = customerService.getCustomerId(userName);
 					customer.setId(customerId);
 					
 					Customer loginUser=customerService.getUserProfile(customerId);

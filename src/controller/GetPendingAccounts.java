@@ -15,6 +15,8 @@ import service.AccountServiceImpl;
 
 /**
  * Servlet implementation class GetPendingAccounts
+ * This servlet is used in admin panel 
+ *         for display pending account for approval or disapproval.
  */
 @WebServlet("/GetPendingAccounts")
 public class GetPendingAccounts extends HttpServlet {
@@ -31,6 +33,7 @@ public class GetPendingAccounts extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session=request.getSession(false);

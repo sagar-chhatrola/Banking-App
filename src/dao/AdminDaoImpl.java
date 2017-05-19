@@ -23,7 +23,7 @@ public class AdminDaoImpl implements AdminDao {
 				 adminStatus=1;
 			 }
 		 }
-		 System.out.println(adminStatus);
+		
 		return adminStatus;
 	}
 	@Override
@@ -34,9 +34,7 @@ public class AdminDaoImpl implements AdminDao {
 		
 		 PreparedStatement pst=con.prepareStatement(query);
 		 pst.setString(1,name); 
-		System.out.println("1");
-		 ResultSet rs=pst.executeQuery();
-		 System.out.println("2");	  
+		 ResultSet rs=pst.executeQuery();  
 		 int status = 0;
 			while (rs.next()) {
 				String pass = rs.getString("password");

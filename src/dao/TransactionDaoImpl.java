@@ -11,40 +11,47 @@ import utility.Database;
 
 public class TransactionDaoImpl implements TransactionDao{
     Connection con=null;
+    /**
+	 * This method is used for get transaction history of particular account
+	 * @param pst,this is  Statement class object
+	 * @param rs,this is  ResultSet class object
+	 * @param transactionList,this is a ArrayList<Transaction> variable,which is used to store transaction information
+	 * @param transaction ,this is a Transaction class object,which is used to set value of transaction information
+	 */
 	public  ArrayList<pojo.Transaction> listOfTransaction(int accountNumber) throws SQLException {
-		ArrayList<pojo.Transaction> al = new ArrayList<pojo.Transaction>();
+		ArrayList<pojo.Transaction> transactionList = new ArrayList<pojo.Transaction>();
 		 con = Database.getInstance().getConnection();
-		 String query = "select * from bank.transcation where credited_acc in(?)";
+		 String getTransactionListQuery = "select * from bank.transcation where creditedAccount in(?)";
 		 
-		PreparedStatement pst = con.prepareStatement(query);
+		PreparedStatement pst = con.prepareStatement(getTransactionListQuery);
         pst.setInt(1, accountNumber);
 		
-		Transaction t;
+		Transaction transaction;
 		ResultSet rs = pst.executeQuery();
 		while (rs.next()) {
-			t = new Transaction();
-			t.setTransactionId(rs.getInt("t_id"));
-			t.setAmount(rs.getDouble("amount"));
-			t.setCreditedAccount(rs.getInt("credited_acc"));
-			t.setDebitedAccount(rs.getInt("debited_acc"));
-			t.setDatetime(rs.getString("datetime"));
-			al.add(t);
+			transaction = new Transaction();
+			transaction.setTransactionId(rs.getInt("transactionId"));
+			transaction.setAmount(rs.getDouble("amount"));
+			transaction.setCreditedAccount(rs.getInt("creditedAccount"));
+			transaction.setDebitedAccount(rs.getInt("debitedAccount"));
+			transaction.setDatetime(rs.getString("datetime"));
+			transactionList.add(transaction);
 		}
-		String query1 = "select * from bank.transcation where debited_acc in(?)";
-        pst=con.prepareStatement(query1);
+		String getTransactionQuery = "select * from bank.transcation where debitedAccount in(?)";
+        pst=con.prepareStatement(getTransactionQuery);
         pst.setInt(1, accountNumber);
 		ResultSet rs1 = pst.executeQuery();
 		while (rs1.next()) {
-			t = new Transaction();
-			t.setTransactionId(rs1.getInt("t_id"));
-			t.setAmount(rs1.getDouble("amount"));
-			t.setCreditedAccount(rs1.getInt("credited_acc"));
-			t.setDebitedAccount(rs1.getInt("debited_acc"));
-			t.setDatetime(rs1.getString("datetime"));
-			al.add(t);
+			transaction = new Transaction();
+			transaction.setTransactionId(rs1.getInt("transactionId"));
+			transaction.setAmount(rs1.getDouble("amount"));
+			transaction.setCreditedAccount(rs1.getInt("creditedAccount"));
+			transaction.setDebitedAccount(rs1.getInt("debitedAccount"));
+			transaction.setDatetime(rs1.getString("datetime"));
+			transactionList.add(transaction);
 		}
 
-		return al;
+		return transactionList;
 	}
 	
 	

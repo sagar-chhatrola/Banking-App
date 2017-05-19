@@ -20,6 +20,8 @@ import service.TransactionServiceImpl;
 
 /**
  * Servlet implementation class getTransactionHistory
+ * @author sagar
+ * This servlet is used for get transaction of particular account
  */
 @WebServlet("/GetTransactionHistory")
 public class GetTransactionHistory extends HttpServlet {
@@ -36,6 +38,13 @@ public class GetTransactionHistory extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
+	 * @param customerId this is int variable which is used to store customer's id.
+	 * @param transactionList this is ArrayList variable 
+	 *        which is used to store transaction history of particular account
+	 * @param accountNumberList this is ArrayList variable 
+	 *         which is used to store accountNumber of particular customer's.
+	 * @param accountNumber this is int variable which is used for store account number of customer 
+	 *          that is selected by customer for show transaction
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -62,9 +71,9 @@ public class GetTransactionHistory extends HttpServlet {
 			
 			transactionList = transactionService.listOfTransaction(accountNumber);
 			session.setAttribute("accountNumberList", accountNumberList);
-			request.setAttribute("accountNumber", accountNumber);
+			session.setAttribute("accountNumber", accountNumber);
 			session.setAttribute("transactionList", transactionList);
-			//request.getRequestDispatcher("transactionHistory.jsp").forward(request, response);
+			
 			response.sendRedirect("transactionHistory.jsp");
 		} catch (SQLException e) {
 

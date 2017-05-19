@@ -18,6 +18,8 @@ import service.CustomerServiceImpl;
 
 /**
  * Servlet implementation class CustomerApprove
+ * This servlet is used for customer approval or disApproval
+ * @author sagar
  */
 @WebServlet("/CustomerApprove")
 public class CustomerApprove extends HttpServlet {
@@ -34,6 +36,11 @@ public class CustomerApprove extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @param customerId this is int variable which is used for get customerId
+	 * @param approve this is boolean variable which used for customer approval status
+	 * @param allCustomerList this is ArrayList variable which used for store all Customer List of bank
+	 * @param customerType this is String variable 
+	 *        which is used to stores customers Type e.g. All,Approve,Non-Approve
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -50,9 +57,7 @@ public class CustomerApprove extends HttpServlet {
 			e.printStackTrace();
 		}
 		_log.info(request.getParameter("customerType"));
-		/*request.setAttribute("customerType", request.getParameter("customerType"));
-		request.getRequestDispatcher("GetAllCustomerByAjax").forward(request, response);
-		*/
+		
 		
 		HttpSession session=request.getSession(false);
 		 allCustomerList=new ArrayList<Customer>();
@@ -61,17 +66,17 @@ public class CustomerApprove extends HttpServlet {
 		 {
 				
 			 allCustomerList=customerService.getAllCustomer();
-			 //System.out.println("All");
+			
 		 }
 		 else if(customerType.equals("Approved"))
 		 {
 			 allCustomerList=customerService.getCustomerByType(true);
-			 //System.out.println("Approved");
+			 
 			 
 		 }
 		 else if(customerType.equals("Non-Approved")){
 			 allCustomerList=customerService.getCustomerByType(false);
-			 //System.out.println("Non-Approved");
+			 
 		 }
 		} catch (SQLException e) {
 			

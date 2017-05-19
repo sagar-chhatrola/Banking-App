@@ -16,7 +16,7 @@
         <tr>
             <th>Account Id</th>
             <th>Balance</th>
-            <th>Show Transaction</th>     
+            <th>Transaction</th>     
         </tr>
         </thead>
         <tbody>
@@ -27,7 +27,7 @@
            <td>${list.accountNumber}</td>
            <td>${list.balance}</td>
            <td> <a name="account" data-toggle="collapse" class="btn btn-info" data-target="#${list.accountNumber}" data-value="${list.accountNumber}"> Show Transaction</a>
-        <div id="${list.accountNumber}" class="collapse transactionList">
+        <div id="${list.accountNumber}" class="collapse">
         
         </div>
         </td>
@@ -46,7 +46,7 @@
                 $.get("getTransactionHistoryByAjax", {
                 	accountNumber:value
                }, function(responseText) {
-                   $(".transactionList").html(responseText);
+                   $("#"+value).html(responseText);
                 });
             });
        });

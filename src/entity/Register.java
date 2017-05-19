@@ -13,6 +13,7 @@ import service.CustomerServiceImpl;
 
 /**
  * Servlet implementation class Register
+ * This servlet is used for register new customers.
  */
 
 public class Register extends HttpServlet {
@@ -29,45 +30,49 @@ public class Register extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
+	 * @param userName this is String variable which is used for store customer' username.
+	 * @param email this is String variable which is used for store customer' email.
+	 * @param password this is String variable which is used for store customer' password.
+	 * @param gender this is String variable which is used for store customer' gender.
+	 * @param mobileNumber this is String variable which is used for store customer' mobileNumber.
+	 * @param date this is String variable which is used for store customer' birthDate.
+	 * @param flag  this is int variable which is used for check userName is already exists or not
+	 *        if flag==1 then userName is already exists
+	 *          otherwise not.  
+	 * @param status this is int variable which is used for new customer registration.
+	 *        if status==1 then successfully registration completed.
+	 *          otherwise exception.     
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		if(request.getParameter("name")=="" || request.getParameter("pass")==""){
-			request.setAttribute("errorMessage","please enter all details");
-			request.getRequestDispatcher("register.jsp").include(request, response);
-			
-		}
-		else{
+		
+		
 		response.setContentType("text/html");
-		String name = request.getParameter("name");
+		String userName = request.getParameter("name");
 		String pass = request.getParameter("pass");
 		String email= request.getParameter("email");
 		String gender=request.getParameter("gender");
-		System.out.println(gender);
 		String date=request.getParameter("birthDate");
-		System.out.println(date);
-		
 		java.sql.Date birthDate = java.sql.Date.valueOf(date);
 		Long mobileNumber=Long.parseLong(request.getParameter("mobileNumber"));
 		
-		int m = 0;
+		int flag = 0;
 		try {
-			m = customerService.chechUserName(name);
+			flag = customerService.chechUserName(userName);
 		} catch (SQLException e1) {
 			
 			e1.printStackTrace();
 		}
-		if (m == 1) {
+		if (flag == 1) {
 			request.setAttribute("userName", "username is already exist");
 			request.getRequestDispatcher("register.jsp").include(request, response);
-		} else if (name == null || pass == null) {
+		} else if (userName == null || pass == null) {
 			request.setAttribute("errorMessage", "enter valid username and password");
 			request.getRequestDispatcher("register.jsp").include(request, response);
 		} else {
 			try {
-				int status = customerService.register(name, pass,email,birthDate,gender,mobileNumber);
-				System.out.println(status);
+				int status = customerService.register(userName, pass,email,birthDate,gender,mobileNumber);
 				if (status>0) {
 					request.setAttribute("registerMessage", "You are successfully Registerd.");
 					request.getRequestDispatcher("index.jsp").include(request, response);
@@ -77,7 +82,7 @@ public class Register extends HttpServlet {
 				e.printStackTrace();
 			}
 		}
-		}
+		
 	}
 
 	/**

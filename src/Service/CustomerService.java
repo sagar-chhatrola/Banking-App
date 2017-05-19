@@ -15,7 +15,6 @@ public interface CustomerService {
 	public  Customer getUserProfile(int customerId) throws SQLException;
 	public  int updateProfile(String userName,String email,String password,String gender,Long mobileNumber,Date birthDate,int customerId) throws SQLException;
 	public int transferAmmount(double ammount, int acc_no, int account_transfer, int id) throws SQLException;
-    public String checkUser(String userName,String password);
     public ArrayList<Customer> getAllCustomer() throws SQLException;
     public ArrayList<Customer> getCustomerByType(boolean customerType) throws SQLException;
     public void customerApprove(int customerId,boolean approve)throws SQLException;

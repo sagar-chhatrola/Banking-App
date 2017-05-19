@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -16,12 +17,9 @@
 <body style="background-image: url(images/bank.jpg);background-repeat:no-repeat;background-size: cover;">
  <%@ page import="javax.servlet.http.HttpSession" %>
 <%@ page import="javax.servlet.http.HttpServletRequest"%>
-<%HttpSession session1=request.getSession(false); 
-if(session1.getAttribute("customer")!=null)
-{
-response.sendRedirect("profile.jsp");	
-}
-%>
+<c:if test="${sessionScope.customer!=null}">
+ <c:redirect url="profile.jsp"/>
+</c:if>
 
 <a id="reg" href="register.jsp" class="btn btn-info" role="button">Register</a>
 <a id="log" href="login.jsp" class="btn btn-info" role="button">Login</a>

@@ -63,12 +63,6 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 
 	@Override
-	public String checkUser(String userName, String password) {
-		
-		return null;
-	}
-
-	@Override
 	public ArrayList<Customer> getAllCustomer() throws SQLException {
 		return customerDao.getAllCustomer();
 	}

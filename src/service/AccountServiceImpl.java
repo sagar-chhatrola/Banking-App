@@ -3,11 +3,8 @@ package service;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import javax.servlet.RequestDispatcher;
-
 import dao.AccountDao;
 import dao.AccountDaoImpl;
-import jdk.nashorn.internal.ir.RuntimeNode.Request;
 import pojo.Account;
 
 public class AccountServiceImpl implements AccountService{

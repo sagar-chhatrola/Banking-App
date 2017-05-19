@@ -20,7 +20,7 @@
     <ul class="nav navbar-nav">
       <li><a href="GetAllCustomer">Home</a></li>
       <li><a href="GetPendingAccounts">Account</a></li>
-      <li style="float:right" ><a href="LogOut.jsp" >LogOut</a></li>
+      <li style="float:right" ><a href="LogOut" >LogOut</a></li>
     </ul>
   </div>
 </nav>

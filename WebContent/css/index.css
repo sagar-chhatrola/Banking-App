@@ -9,11 +9,7 @@
       height: 100%;
    
 }
-a{
-float:right;
-margin-right: 15px;
-}
-.errorMessage{
+#errorMessage{
 	
 	color: green;
 }

@@ -20,7 +20,7 @@
     <ul class="nav navbar-nav">
       <li><a href="GetAllCustomer">Home</a></li>
       <li><a href="GetPendingAccounts">Account</a></li>
-      <li style="float:right" ><a href="LogOut.jsp" >LogOut</a></li>
+      <li style="float:right" ><a href="LogOut" >LogOut</a></li>
     </ul>
   </div>
 </nav>
@@ -72,12 +72,13 @@ Choose Type: <select name="customerType" id="customerType">
            </c:choose>
            </td>
         <td>
-        <a class="btn btn-info" onclick="javascript:onClick(this)" data-toggle="collapse"  data-value="${list.id}" href="#${list.id}">
+        <a class="btn btn-info"  onclick="javascript:onClick(this)" data-toggle="collapse"  data-value="${list.id}" href="#${list.id}">
         Show Accounts</a>
        </td>
           </tr>
           <tr id="${list.id}"> </tr>
 			</c:forEach>
+			</tbody>
 			</table>
  
 </div>
@@ -112,6 +113,8 @@ Choose Type: <select name="customerType" id="customerType">
                 
                 function onClick(item) {
                 	var value = item.getAttribute("data-value");
+                	
+                	
                     $.get("GetAccountInfoList", {
                     	customerId:value
                    }, function(responseText) {

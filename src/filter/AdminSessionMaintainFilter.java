@@ -15,6 +15,7 @@ import javax.servlet.http.HttpSession;
 
 /**
  * Servlet Filter implementation class AdminSessionMaintainFilter
+ * 
  */
 @WebFilter(urlPatterns={"/admin.jsp","/accountAdminpage.jsp"}
 
@@ -43,7 +44,6 @@ public class AdminSessionMaintainFilter implements Filter {
 		 HttpServletRequest httpRequest=(HttpServletRequest)request;
          HttpServletResponse httpResponse=(HttpServletResponse)response;
          HttpSession session=httpRequest.getSession(false);
-         System.out.println(session);
          String adminName=(String) session.getAttribute("adminName");
          
          if(adminName==null)

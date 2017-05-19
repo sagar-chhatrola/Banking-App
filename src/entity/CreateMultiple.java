@@ -15,6 +15,7 @@ import service.AccountServiceImpl;
 
 /**
  * Servlet implementation class CreateMultiple
+ * This servlte is used for create multiple account for one customer.
  */
 
 public class CreateMultiple extends HttpServlet {
@@ -22,6 +23,7 @@ public class CreateMultiple extends HttpServlet {
 	AccountService accountService=new AccountServiceImpl();
 	/**
 	 * @see HttpServlet#HttpServlet()
+	 * 
 	 */
 	public CreateMultiple() {
 		super();
@@ -31,6 +33,12 @@ public class CreateMultiple extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
+	 * @param name this is String variable which is used for store customer's name
+	 * @param pass this is String variable which is used for store customer's pass
+	 * @param id this is int variable which is used for store customer's id.
+	 * @param status this is int variable which is used for created another account 
+	 *        if status==1 then successfully another account created 
+	 *          otherwise exception. 
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -41,13 +49,17 @@ public class CreateMultiple extends HttpServlet {
 			String pass = request.getParameter("pass");
 			Customer customer = (Customer) session.getAttribute("customer");
 			int id = customer.getId();
-			System.out.println(id);
 			try {
 				
 				int status = accountService.createMultiple(name, pass, id);
 				if (status == 1) {
 					session.setAttribute("errorMessage", "Successfully Another Account Created.");
 					response.sendRedirect("GetAccountInfo");
+				}
+				else
+				{
+					request.setAttribute("invalid", "Invalid username or password");
+					request.getRequestDispatcher("createMultiple.jsp").forward(request, response);
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();

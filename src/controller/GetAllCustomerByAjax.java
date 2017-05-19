@@ -17,6 +17,7 @@ import service.CustomerServiceImpl;
 
 /**
  * Servlet implementation class GetAllCustomerByAjax
+ * This servlet is used for get customer By their type.
  */
 @WebServlet("/GetAllCustomerByAjax")
 public class GetAllCustomerByAjax extends HttpServlet {
@@ -34,10 +35,13 @@ public class GetAllCustomerByAjax extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @param customerType this is String variable
+	 *         which is used for customer's for e.g. All,approve,Non-Approve.
+	 * @param allCustomerList this is ArrayList variable 
+	 *         which is used to store all customer's list of particular type
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String customerType=request.getParameter("customerType");
-		System.out.println(customerType+"   hii");
 		HttpSession session=request.getSession(false);
 		 allCustomerList=new ArrayList<Customer>();
 		 try {
@@ -45,17 +49,17 @@ public class GetAllCustomerByAjax extends HttpServlet {
 		 {
 				
 			 allCustomerList=customerService.getAllCustomer();
-			 System.out.println("All");
+			
 		 }
 		 else if(customerType.equals("Approved"))
 		 {
 			 allCustomerList=customerService.getCustomerByType(true);
-			 System.out.println("Approved");
+			
 			 
 		 }
 		 else if(customerType.equals("Non-Approved")){
 			 allCustomerList=customerService.getCustomerByType(false);
-			 System.out.println("Non-Approved");
+			 
 		 }
 		} catch (SQLException e) {
 			

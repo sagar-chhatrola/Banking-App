@@ -18,6 +18,7 @@ import service.CustomerServiceImpl;
 
 /**
  * Servlet implementation class GetAllCustomer
+ * This servlet is used for get all customer
  */
 @WebServlet("/GetAllCustomer")
 public class GetAllCustomer extends HttpServlet {
@@ -34,6 +35,7 @@ public class GetAllCustomer extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @param allCustomerList is ArrayList variable which is used to store all customer List.
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
@@ -41,7 +43,7 @@ public class GetAllCustomer extends HttpServlet {
 		 try {
 			 HttpSession session =request.getSession(false);
 			 allCustomerList=new ArrayList<Customer>();
-			allCustomerList=customerService.getAllCustomer();
+			 allCustomerList=customerService.getAllCustomer();
 			 session.setAttribute("allCustomer", allCustomerList);
 			 response.sendRedirect("admin.jsp");
 		} catch (SQLException e) {

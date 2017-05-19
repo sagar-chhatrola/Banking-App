@@ -15,6 +15,7 @@ import service.CustomerServiceImpl;
 
 /**
  * Servlet implementation class UpdateUserProfile
+ * This servlet is used for update customer's profile data
  */
 
 public class UpdateUserProfile extends HttpServlet {
@@ -31,6 +32,12 @@ public class UpdateUserProfile extends HttpServlet {
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
 	 *      response)
+	 * @param userName this is String variable which is used for store customer' username.
+	 * @param email this is String variable which is used for store customer' email.
+	 * @param password this is String variable which is used for store customer' password.
+	 * @param gender this is String variable which is used for store customer' gender.
+	 * @param mobileNumber this is String variable which is used for store customer' mobileNumber.
+	 * @param birthDate this is String variable which is used for store customer' birthDate.
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
@@ -38,14 +45,14 @@ public class UpdateUserProfile extends HttpServlet {
 		String email = request.getParameter("email");
 		String password = request.getParameter("pass");
 		String gender = request.getParameter("gender");
-		Long mobile = Long.parseLong(request.getParameter("mobileNumber"));
+		Long mobileNumber = Long.parseLong(request.getParameter("mobileNumber"));
 		java.sql.Date birthDate = java.sql.Date.valueOf(request.getParameter("birthDate"));
 		HttpSession session = request.getSession(false);
 		Customer customer = (Customer) session.getAttribute("customer");
 		int customerId = customer.getId();
 		
 		try {
-			 customerService.updateProfile(userName, email, password, gender, mobile, birthDate, customerId);
+			 customerService.updateProfile(userName, email, password, gender, mobileNumber, birthDate, customerId);
 		} catch (SQLException e) {
 
 			e.printStackTrace();

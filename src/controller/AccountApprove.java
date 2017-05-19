@@ -14,6 +14,9 @@ import service.AccountServiceImpl;
 
 /**
  * Servlet implementation class AccountApprove
+ * This servlet is used for  account approval or disapproval
+ * @author sagar
+ * 
  */
 @WebServlet("/AccountApprove")
 public class AccountApprove extends HttpServlet {
@@ -29,6 +32,8 @@ public class AccountApprove extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @param approve this is boolean variable which used for status of approval
+	 * @param accountNumber this is int variable which is used for get accountNumber
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		boolean approve=Boolean.parseBoolean(request.getParameter("approve"));

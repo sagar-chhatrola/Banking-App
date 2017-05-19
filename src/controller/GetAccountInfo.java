@@ -18,6 +18,7 @@ import service.AccountServiceImpl;
 
 /**
  * Servlet implementation class GetAccountInfo
+ * This servlet is used for get Account Information of particular customer based on their customer Id.
  */
 @WebServlet("/GetAccountInfo")
 public class GetAccountInfo extends HttpServlet {
@@ -34,7 +35,11 @@ public class GetAccountInfo extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @param id this is int variable which used for store current login customers's Id.
+	 * @param accountInfoList this is ArrayList variable
+	 *        which is used to store all Account info of current Login customer.
 	 */
+    
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session=request.getSession(false);
 		int id;

@@ -20,14 +20,7 @@
     <servlet-name>Login</servlet-name>
     <url-pattern>/Login</url-pattern>
   </servlet-mapping>
-  <servlet>
-    <servlet-name>Logout</servlet-name>
-    <servlet-class>entity.LogOut</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>Logout</servlet-name>
-    <url-pattern>/LogOut</url-pattern>
-  </servlet-mapping>
+ 
   <servlet>
     <servlet-name>DoTransaction</servlet-name>
     <servlet-class>entity.DoTransaction</servlet-class>

@@ -18,6 +18,7 @@ import service.TransactionServiceImpl;
 
 /**
  * Servlet implementation class getTransactionHistoryByAjax
+ * this servlet is used for show transaction of particular account by selected account number
  */
 @WebServlet("/getTransactionHistoryByAjax")
 public class GetTransactionHistoryByAjax extends HttpServlet {
@@ -33,13 +34,16 @@ public class GetTransactionHistoryByAjax extends HttpServlet {
 
 	/**
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @param accountNumber this is int variable which is used for store account number of customer 
+	 *          that is selected by customer for show transaction.
+	 * @param transactionList this is ArrayList variable 
+	 *        which is used to store transaction history of particular account
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		int accountNumber=Integer.parseInt(request.getParameter("accountNumber"));
-		System.out.println("accountNumber::"+ accountNumber);
 		HttpSession session=request.getSession(false);
-		System.out.println("hiii ");
+		
            List<Transaction> transactionList;
            try {
         	   
